@@ -8,4 +8,5 @@ Project Goals
 Principles to Follow
 -----------------
 Many of these are from @TomBZombie
+
 1. Ensure that the MVC Models are not Domain Models
