@@ -1,0 +1,5 @@
+
+
+/* This tss is for the static pages */
+
+main { content: template('Modules/Static/static.xml', data(model.section)); }
