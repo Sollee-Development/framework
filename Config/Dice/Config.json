@@ -1,3 +1,20 @@
 {
-    
+    "PDO" : {
+        "constructParams" : [
+            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["dsn"]},
+            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["username"]},
+            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["password"]}
+        ]
+    },
+    "MaphperLoader\\Json" : {
+        "constructParams" : []
+    },
+    "SimpleCache\\SimpleCache" : {
+        "constructParams" : ["tmp"]
+    },
+    "Transphporm\\Builder" : {
+        "call" : [
+            ["loadModule", [{"instance" : "TransphpormMessages\\Module"}]]
+        ]
+    }
 }

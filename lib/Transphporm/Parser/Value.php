@@ -5,84 +5,153 @@
  * @license         http://www.opensource.org/licenses/bsd-license.php  BSD License *
  * @version         1.0                                                             */
 namespace Transphporm\Parser;
-/** Parses "string" and function(args) e.g. data(foo) or iteration(bar) */ 
+/** Parses "string" and function(args) e.g. data(foo) or iteration(bar) */
 class Value {
-	private $dataFunction;
+	private $baseData;
+	private $autoLookup;
+	/*
+		Stores the last value e.g.
+			"a" + "b"
+		Will store "a" before reading the token for the + and perfoming the concatenate operation
+	*/
+	private $last;
+	private $data;
+	private $result;
 
-	public function __construct(\Transphporm\Hook\DataFunction $dataFunction) {
-		$this->dataFunction = $dataFunction;
+	private $tokenFuncs = [
+			Tokenizer::NOT => 'processComparator',
+			Tokenizer::EQUALS => 'processComparator',
+			Tokenizer::DOT => 'processDot',
+			Tokenizer::OPEN_SQUARE_BRACKET => 'processSquareBracket',
+			Tokenizer::ARG => 'processSeparator',
+			Tokenizer::CONCAT => 'processSeparator',
+			Tokenizer::NAME => 'processScalar',
+			Tokenizer::NUMERIC => 'processString',
+			Tokenizer::BOOL => 'processString',
+			Tokenizer::STRING => 'processString',
+			Tokenizer::OPEN_BRACKET => 'processBrackets'
+	];
+
+	public function __construct($data, $autoLookup = false) {
+		$this->baseData = $data;
+		$this->autoLookup = $autoLookup;
 	}
 
-	private function extractQuotedString($marker, $str) {
-		$finalPos = $this->findMatchingPos($str, $marker);
-		$string = substr($str, 1, $finalPos-1);
-		//Now remove escape characters
-		return str_replace('\\' . $marker, $marker, $string);
+	public function parse($str) {
+		$tokenizer = new Tokenizer($str);
+		$tokens = $tokenizer->getTokens();
+		$this->result = $this->parseTokens($tokens, $this->baseData);
+		return $this->result;
 	}
 
-	private function parseFunction($function) {
-		$open = strpos($function, '(');
-		if ($open) {
-			$close = strpos($function, ')', $open);
+	public function parseTokens($tokens, $data = null) {
+		$this->result = new ValueResult;
+		$this->data = new ValueData($data ? $data : $this->baseData);
+		$this->last = null;
 
-			//Count the number of fresh opening ( before $close
-			$cPos = $open+1;
-			while (($cPos = strpos($function, '(', $cPos+1)) !== false && $cPos < $close) $close = strpos($function, ')', $close+1);
+		if (count($tokens) <= 0) return [$data];
 
-			$name = substr($function, 0, $open);
-
-			$params = substr($function, $open+1, $close-$open-1);
-			return ['name' => $name, 'params' => $params, 'endPoint' => $close];
+		foreach (new TokenFilterIterator($tokens, [Tokenizer::WHITESPACE, Tokenizer::NEW_LINE]) as $token) {
+			$this->{$this->tokenFuncs[$token['type']]}($token);
 		}
-		else return ['name' => null, 'params' => $function, 'endPoint' => strlen($function)];
+
+		$this->processLast();
+		return $this->result->getResult();
 	}
 
-	public function parse($function, \DomElement $element) {
-		$result = [];
-		if ($function && in_array($function[0], ['\'', '"'])) {
-			$finalPos = $this->findMatchingPos($function, $function[0]);
-			$result[] = $this->extractQuotedString($function[0], $function);
+	private function processComparator($token) {
+		$this->processLast();
+
+		if (!(in_array($this->result->getMode(), array_keys($this->tokenFuncs, 'processComparator')) && $token['type'] == Tokenizer::EQUALS)) {
+			$this->result->setMode($token['type']);
+			$this->last = null;
 		}
+	}
+
+	//Reads the last selected value from $data regardless if it's an array or object and overrides $this->data with the new value
+	//Dot moves $data to the next object in $data foo.bar moves the $data pointer from `foo` to `bar`
+	private function processDot($token) {
+		if ($this->last !== null) $this->data->traverse($this->last);
 		else {
-			$func = $this->parseFunction($function);
-			$finalPos = $func['endPoint'];			
-
-			if (($data = $this->callFunc($func['name'], $func['params'], $element)) !== false) {
-				$result = $this->appendToArray($result, $data);
-			} 
-			else $result[] = trim($function);
-		}
-		$remaining = trim(substr($function, $finalPos+1));
-		return $this->parseNextValue($remaining, $result, $element);
-	}
-
-	private function appendToArray($array, $value) {
-		if (is_array($value)) $array += $value;
-		else $array[] = $value;
-		return $array;
-	}
-
-	private function callFunc($name, $params, $element) {
-		if ($name && is_callable([$this->dataFunction, $name])) {
-			return $this->dataFunction->$name($this->parse($params, $element), $element);	
-		}
-		return false;
-	}
-
-	private function parseNextValue($remaining, $result, $element) {
-		if (strlen($remaining) > 0 && $remaining[0] == ',') $result = array_merge($result, $this->parse(trim(substr($remaining, 1)), $element));
-		return $result;
-	}
-	
-	private function findMatchingPos($string, $char, $start = 0, $escape = '\\') {
-		$pos = $start+1;
-		$end = 0;
-		while ($end = strpos($string, $char, $pos)) {
-			if ($string[$end-1] === $escape) $pos = $end+1;
+			//When . is not preceeded by anything, treat it as part of the string instead of an operator
+			// foo.bar is treated as looking up `bar` in `foo` whereas .foo is treated as the string ".foo"
+			$lastResult = $this->result->pop();
+			if ($lastResult) $this->data = new ValueData($lastResult);
 			else {
-				break;
+				$this->processString(['value' => '.']);
+				$this->result->setMode(Tokenizer::CONCAT);
 			}
 		}
-		return $end;
+
+		$this->last = null;
+	}
+
+	private function processSquareBracket($token) {
+		$parser = new Value($this->baseData, $this->autoLookup);
+		if ($this->baseData instanceof \Transphporm\Functionset && $this->baseData->hasFunction($this->last)) {
+			$this->callTransphpormFunctions($token);
+		}
+		else {
+			if ($this->last !== null) $this->data->traverse($this->last);
+			$this->last = $parser->parseTokens($token['value'], null)[0];
+		}
+	}
+
+	private function processSeparator($token) {
+		$this->result->setMode($token['type']);
+	}
+
+	private function processScalar($token) {
+		$this->last = $token['value'];
+	}
+
+	private function processString($token) {
+		$this->result->processValue($token['value']);
+	}
+
+	private function processBrackets($token) {
+		if ($this->baseData instanceof \Transphporm\Functionset && $this->baseData->hasFunction($this->last)) {
+			$this->callTransphpormFunctions($token);
+		}
+		else {
+			$this->processNested($token);
+		}
+	}
+
+	private function processNested($token) {
+		$parser = new Value($this->baseData, $this->autoLookup);
+		$funcResult = $this->data->parseNested($parser, $token, $this->last);
+		$this->result->processValue($funcResult);
+		$this->last = null;
+	}
+
+	private function callTransphpormFunctions($token) {
+		$this->result->processValue($this->baseData->{$this->last}($token['value']));
+		foreach ($this->result->getResult() as $i => $value) {
+			if (is_scalar($value)) {
+				$val = $this->data->read($value);
+				if ($val) $this->result[$i] = $val;
+			}
+		}
+		$this->last = null;
+	}
+
+	//Applies the current operation to whatever is in $last based on $mode
+	private function processLast() {
+		if ($this->last !== null) {
+			try {
+				$value = $this->data->extract($this->last, $this->autoLookup);
+				$this->result->processValue($value);
+			}
+			catch (\UnexpectedValueException $e) {
+				if (!$this->autoLookup) {
+					$this->result->processValue($this->last);
+				}
+				else {
+					$this->result->clear();
+					$this->result[0] = false;
+				}
+			}
+		}
 	}
 }

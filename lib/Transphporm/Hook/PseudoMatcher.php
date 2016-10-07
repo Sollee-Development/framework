@@ -5,143 +5,68 @@
  * @license         http://www.opensource.org/licenses/bsd-license.php  BSD License *
  * @version         1.0                                                             */
 namespace Transphporm\Hook;
+use \Transphporm\Parser\Tokenizer;
 /** Determines whether $element matches the pseudo rule such as nth-child() or [attribute="value"] */
 class PseudoMatcher {
 	private $pseudo;
-	private $dataFunction;
+	private $valueParser;
+	private $functions = [];
 
-	public function __construct($pseudo, DataFunction $dataFunction) {
+	public function __construct($pseudo, \Transphporm\Parser\Value $valueParser) {
 		$this->pseudo = $pseudo;
-		$this->dataFunction = $dataFunction;
+		$this->valueParser = $valueParser;
+	}
+
+	public function registerFunction(\Transphporm\Pseudo $pseudo) {
+		$this->functions[] = $pseudo;
 	}
 
 	public function matches($element) {
 		$matches = true;
-		$functions = ['attribute', 'nth', 'not'];
-
-		foreach ($this->pseudo as $pseudo) {			
-			foreach ($functions as $func) {
-				$matches = $matches && $this->$func($pseudo, $element);
-			}
-		}		
-		return $matches;
-	}
-
-	private function betweenBrackets($string, $openChr, $closingChr, $start = 0) {
-		$open = strpos($string, $openChr, $start);
-		$close = strpos($string, $closingChr, $open);
-
-		$cPos = $open+1;
-		while (($cPos = strpos($string, $openChr, $cPos+1)) !== false && $cPos < $close) $close = strpos($string, $closingChr, $close+1);
-
-		return substr($string, $open+1, $close-$open-1);
-	}
-	
-	private function attribute($pseudo, $element) {
-		$pos = strpos($pseudo, '[');
-		if ($pos === false) return true;
-		
-		$name = substr($pseudo, 0, $pos);
-		if (!is_callable([$this->dataFunction, $name])) return true;
-
-		$criteria = $this->betweenBrackets($pseudo, '[', ']');
-
-		if (strpos($pseudo, '=') === false) {
-			$lookupValue = $this->dataFunction->$name([$criteria], $element);
-			return $lookupValue !== null;
-		}
-		list ($field, $value) = explode('=', $criteria);
-
-		$operator = $this->getOperator($field);
-		$lookupValue = $this->dataFunction->$name([trim($field, $operator)], $element);
-
-		return $this->processOperator($operator, $lookupValue, $this->parseValue(trim($value, '"')));
-	}
-
-	//Currently only not is supported, but this is separated out to support others in future
-	private function processOperator($operator, $lookupValue, $value) {
-		$matched = $lookupValue == $value;
-		return $operator === '!' ? !$matched : $matched;
-	}
-
-	private function parseValue($value) {
-		if ($value == 'true') return true;
-		else if ($value == 'false') return false;
-		else return $value;
-	}
-
-	private function getOperator($field) {
-		if ($field[strlen($field)-1] == '!') {
-			return '!';
-		}
-		else return '';
-	}
-
-	private function nth($pseudo, $element) {
-		if (strpos($pseudo, 'nth-child') === 0) {	
-			$criteria = $this->getBetween($pseudo, '(', ')');
-			$num = $this->getBetween($element->getNodePath(), '[', ']');
-			
-			if (is_callable([$this, $criteria])) return $this->$criteria($num);
-			else return $num == $criteria;
-			
-		}
-		return true;
-	}
-
-	private function not($pseudo, $element) {
-		if (strpos($pseudo, 'not') === 0) {
-			$valueParser = new \Transphporm\Parser\Value($this->dataFunction);
-			$css = explode(',', $this->getBetween($pseudo, '(', ')'));
-
-			foreach ($css as $selector) {
-				$cssToXpath = new \Transphporm\Parser\CssToXpath($selector, $valueParser);
-				$xpathString = $cssToXpath->getXpath();	
-				$xpath = new \DomXpath($element->ownerDocument);
-				
-				foreach ($xpath->query($xpathString) as $matchedElement) {
-					if ($element->isSameNode($matchedElement)) return false;
+		foreach ($this->pseudo as $tokens) {
+			foreach ($this->functions as $function) {
+				try {
+					$parts = $this->getFuncParts($tokens);
+					$matches = $matches && $function->match($parts['name'], $parts['args'], $element);
+				}
+				catch (\Exception $e) {
+					throw new \Transphporm\RunException(\Transphporm\Exception::PSEUDO, $parts['name'], $e);
 				}
 			}
 		}
-		return true;
+		return $matches;
 	}
 
-	public function attr() {
-		foreach ($this->pseudo as $pseudo) {
-			if (strpos($pseudo, 'attr') === 0) {
-				$criteria = trim($this->getBetween($pseudo, '(', ')'));
-				return $criteria;
-			}
+	private function getFuncParts($tokens) {
+		$parts = [];
+		$parts['name'] = $this->getFuncName($tokens);
+		if ($parts['name'] === null || in_array($parts['name'], ['data', 'iteration', 'root'])) {
+			$parts['args'] = $this->valueParser->parseTokens($tokens);
 		}
-
-		return false;
+		else if (count($tokens) > 1) {
+			$tokens->rewind();
+			$tokens->next();
+			$parts['args'] = $this->valueParser->parseTokens($tokens->current()['value']);
+		}
+		else $parts['args'] = [['']];
+		return $parts;
 	}
 
-	public function header($element)  {
-		if ($this->matches($element)) {
-			foreach ($this->pseudo as $pseudo) {
-				if (strpos($pseudo, 'header') === 0) return $this->getBetween($pseudo, '[', ']');
-			}
+	private function getFuncName($tokens) {
+		if ($tokens->type() === Tokenizer::NAME) return $tokens->read();
+		return null;
+	}
+
+	public function hasFunction($name) {
+		foreach ($this->pseudo as $tokens) {
+			if ($name === $this->getFuncName($tokens)) return true;
 		}
 	}
 
-	private function odd($num) {
-		return $num % 2 === 1;
-	}
-
-	private function even($num) {
-		return $num % 2 === 0;
-	}
-
-	private function getBetween($string, $start, $end) {
-		$open = strpos($string, $start);
-		if ($open === false) return false;
-		$close = strpos($string, $end, $open);
-		return substr($string, $open+1, $close-$open-1);
-	}
-
-	public function getPseudo() {
-		return $this->pseudo;
+	public function getFuncArgs($name) {
+		foreach ($this->pseudo as $tokens) {
+			$parts = $this->getFuncParts($tokens);
+			if ($name === $parts['name']) return $parts['args'];
+		}
 	}
 }

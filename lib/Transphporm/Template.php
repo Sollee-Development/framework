@@ -16,7 +16,8 @@ class Template {
 	public function __construct($doc) {
 		$this->document = new \DomDocument;
 
-		$this->document->loadXML($doc);
+		$this->loadDocument($doc);
+
 		$this->xpath = new \DomXPath($this->document);
 		$this->xpath->registerNamespace('php', 'http://php.net/xpath');
 		$this->xpath->registerPhpFunctions();
@@ -27,11 +28,25 @@ class Template {
 		}
 	}
 
+	/** Loads a HTML or XML document */
+	private function loadDocument($doc) {
+		libxml_use_internal_errors(true);
+		if ($this->document->loadXml($doc) === false) {
+				$this->document->loadHtml($doc);
+
+				if (strpos($doc, '<!') !== 0) {
+					$templateNode = $this->document->getElementsByTagName('template')[0];
+					$this->document->replaceChild($templateNode, $this->document->documentElement);
+				}
+		}
+		libxml_clear_errors();
+	}
+
 	/** Returns the document's XML prefix */
 	public function getPrefix() {
 		return $this->prefix;
 	}
-	
+
 	/** Assigns a $hook which will be run on any element that matches the given $xpath query */
 	public function addHook($xpath, $hook) {
 		$this->hooks[] = [$xpath, $hook];

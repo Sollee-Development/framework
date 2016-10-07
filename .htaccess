@@ -3,6 +3,21 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^(www.)?solleedevelopment.com$ [NC]
 RewriteRule ^(.*)$ - [L,R=404]
 
+RewriteCond %{HTTP_HOST} ^example.com$ [NC]
+RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_FILENAME} \.(php|json|xml|tss)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !index.php
+RewriteRule ^(.*)$ - [L,R=404]
+
+
+# 1 year = 31536000
+# 1 Month cache for images
+ <filesMatch ".(jpg|jpeg|png|gif)$">
+ Header set Cache-Control "max-age=2678400, public"
+ </filesMatch>

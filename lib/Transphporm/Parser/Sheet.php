@@ -8,78 +8,88 @@ namespace Transphporm\Parser;
 /** Parses a .tss file into individual rules, each rule has a query e,g, `ul li` and a set of rules e.g. `display: none; bind: iteration(id);` */
 class Sheet {
 	private $tss;
-	private $baseDir;
-	private $prefix;
+	private $file;
 	private $valueParser;
+	private $xPath;
+	private $tokenizer;
 
-	public function __construct($tss, $baseDir, Value $valueParser, $prefix = '') {
-		$this->tss = $this->stripComments($tss);
-		$this->baseDir = $baseDir;
-		$this->prefix = $prefix;
+	public function __construct($tss, $file, CssToXpath $xPath, Value $valueParser) {
+		$this->tss = $this->stripComments($tss, '//', "\n");
+		$this->tss = $this->stripComments($this->tss, '/*', '*/');
+		$this->tokenizer = new Tokenizer($this->tss);
+		$this->tss = $this->tokenizer->getTokens();
+		$this->file = $file;
+		$this->xPath = $xPath;
 		$this->valueParser = $valueParser;
 	}
 
-	public function parse($pos = 0, $rules = [], $indexStart = 0) {
-		while ($next = strpos($this->tss, '{', $pos)) {
-			if ($processing = $this->processingInstructions($this->tss, $pos, $next, count($rules)+$indexStart)) {
-				$pos = $processing['endPos']+1;
+	public function parse($indexStart = 0) {
+		$rules = [];
+		$line = 1;
+		foreach (new TokenFilterIterator($this->tss, [Tokenizer::WHITESPACE]) as $token) {
+			if ($processing = $this->processingInstructions($token, count($rules)+$indexStart)) {
+				$this->tss->skip($processing['skip']+1);
 				$rules = array_merge($rules, $processing['rules']);
+				continue;
 			}
+			else if ($token['type'] === Tokenizer::NEW_LINE) {
+				$line++;
+				continue;
+			}
+			$selector = $this->tss->from($token['type'], true)->to(Tokenizer::OPEN_BRACE);
+			$this->tss->skip(count($selector));
+			if (count($selector) === 0) break;
 
-			$selector = trim(substr($this->tss, $pos, $next-$pos));
-			$pos =  strpos($this->tss, '}', $next)+1;
-			$newRules = $this->cssToRules($selector, count($rules)+$indexStart, $this->getProperties(trim(substr($this->tss, $next+1, $pos-2-$next))));
+			$newRules = $this->cssToRules($selector, count($rules)+$indexStart, $this->getProperties($this->tss->current()['value']), $line);
 			$rules = $this->writeRule($rules, $newRules);
 		}
-		//there may be processing instructions at the end
-		if ($processing = $this->processingInstructions($this->tss, $pos, strlen($this->tss), count($rules)+$indexStart)) $rules = array_merge($rules, $processing['rules']);
 		usort($rules, [$this, 'sortRules']);
+		$this->checkError($rules);
 		return $rules;
 	}
 
-	private function CssToRules($selector, $index, $properties) {
-		$parts = explode(',', $selector);
+	private function checkError($rules) {
+		if (empty($rules) && count($this->tss) > 0) throw new \Exception('No TSS rules parsed');
+	}
+
+	private function CssToRules($selector, $index, $properties, $line) {
+		$parts = $selector->trim()->splitOnToken(Tokenizer::ARG);
 		$rules = [];
 		foreach ($parts as $part) {
-			$xPath = new CssToXpath($part, $this->valueParser, $this->prefix);
-			$rules[$part] = new \Transphporm\Rule($xPath->getXpath(), $xPath->getPseudo(), $xPath->getDepth(), $index++);
-			$rules[$part]->properties = $properties;
-		}		
+			$part = $part->trim();
+			$rules[$this->tokenizer->serialize($part)] = new \Transphporm\Rule($this->xPath->getXpath($part), $this->xPath->getPseudo($part), $this->xPath->getDepth($part), $index++, $this->file, $line);
+			$rules[$this->tokenizer->serialize($part)]->properties = $properties;
+		}
 		return $rules;
 	}
 
 	private function writeRule($rules, $newRules) {
 		foreach ($newRules as $selector => $newRule) {
+
 			if (isset($rules[$selector])) {
 				$newRule->properties = array_merge($rules[$selector]->properties, $newRule->properties);
 			}
 			$rules[$selector] = $newRule;
-		}	
-		
+		}
+
 		return $rules;
 	}
 
-	private function processingInstructions($tss, $pos, $next, $indexStart) {
-		$rules = [];
-		while (($atPos = strpos($tss, '@', $pos)) !== false) {
-			if ($atPos  <= (int) $next) {
-				$spacePos = strpos($tss, ' ', $atPos);
-				$funcName = substr($tss, $atPos+1, $spacePos-$atPos-1);
-				$pos = strpos($tss, ';', $spacePos);
-				$args = substr($tss, $spacePos+1, $pos-$spacePos-1);
-				$rules = array_merge($rules, $this->$funcName($args, $indexStart));
-			}
-			else {
-				break;	
-			} 
-		}
+	private function processingInstructions($token, $indexStart) {
+		if ($token['type'] !== Tokenizer::AT_SIGN) return false;
+		$tokens = $this->tss->from(Tokenizer::AT_SIGN, false)->to(Tokenizer::SEMI_COLON, false);
+		$funcName = $tokens->from(Tokenizer::NAME, true)->read();
+		$args = $this->valueParser->parseTokens($tokens->from(Tokenizer::NAME));
+		$rules = $this->$funcName($args, $indexStart);
 
-		return empty($rules) ? false : ['endPos' => $pos, 'rules' => $rules];
+		return ['skip' => count($tokens)+1, 'rules' => $rules];
 	}
 
 	private function import($args, $indexStart) {
-		$sheet = new Sheet(file_get_contents($this->baseDir . trim($args, '\'" ')), $this->baseDir, $this->valueParser, $this->prefix);
-		return $sheet->parse(0, [], $indexStart);
+		if ($this->file !== null) $fileName = dirname(realpath($this->file)) . DIRECTORY_SEPARATOR . $args[0];
+		else $fileName = $args[0];
+		$sheet = new Sheet(file_get_contents($fileName), $fileName, $this->xPath, $this->valueParser);
+		return $sheet->parse($indexStart);
 	}
 
 	private function sortRules($a, $b) {
@@ -89,29 +99,26 @@ class Sheet {
 		return ($a->depth < $b->depth) ? -1 : 1;
 	}
 
-	private function stripComments($str) {
+	private function stripComments($str, $open, $close) {
 		$pos = 0;
-		while (($pos = strpos($str, '/*', $pos)) !== false) {
-			$end = strpos($str, '*/', $pos);
-			$str = substr_replace($str, '', $pos, $end-$pos+2);
+		while (($pos = strpos($str, $open, $pos)) !== false) {
+			$end = strpos($str, $close, $pos);
+			if ($end === false) break;
+			$str = substr_replace($str, '', $pos, $end-$pos+strlen($close));
 		}
 
 		return $str;
 	}
 
-	private function getProperties($str) {
-		$stringExtractor = new StringExtractor($str);
-		$rules = explode(';', $stringExtractor);
-		$return = [];
+	private function getProperties($tokens) {
+        $rules = $tokens->splitOnToken(Tokenizer::SEMI_COLON);
 
-		foreach ($rules as $rule) {
-			if (trim($rule) === '') continue;
-			$parts = explode(':', $rule, 2);
+        $return = [];
+        foreach ($rules as $rule) {
+            $name = $rule->from(Tokenizer::NAME, true)->to(Tokenizer::COLON)->read();
+            $return[$name] = $rule->from(Tokenizer::COLON)->trim();
+        }
 
-			$parts[1] = $stringExtractor->rebuild($parts[1]);
-			$return[trim($parts[0])] = isset($parts[1]) ? trim($parts[1]) : '';
-		}
-
-		return $return;
-	}
+        return $return;
+    }
 }

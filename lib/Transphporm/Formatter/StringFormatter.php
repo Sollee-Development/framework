@@ -17,10 +17,4 @@ class StringFormatter {
 	public function titlecase($val) {
 		return ucwords($val);
 	}
-
-	public function html($val) {
-		$doc = new \DomDocument();
-		$doc->loadXML($val);
-		return $doc->documentElement;
-	}
 }

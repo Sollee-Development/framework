@@ -9,18 +9,24 @@ namespace Transphporm;
 class Builder {
 	private $template;
 	private $tss;
-	private $registeredProperties = [];
-	private $formatters = [];
-	private $locale;
 	private $baseDir;
 	private $cache;
 	private $time;
+	private $modules = [];
+	private $defaultModules = [
+		'\\Transphporm\\Module\\Basics',
+		'\\Transphporm\\Module\\Pseudo',
+		'\\Transphporm\\Module\\Format',
+		'\\Transphporm\\Module\\Functions'
+	];
 
-
-	public function __construct($template, $tss = '') {
+	public function __construct($template, $tss = '', $modules = null) {
 		$this->template = $template;
 		$this->tss = $tss;
 		$this->cache = new Cache(new \ArrayObject());
+
+		$modules = is_array($modules) ? $modules : $this->defaultModules;
+		foreach ($modules as $module) $this->loadModule(new $module);
 	}
 
 	//Allow setting the time used by Transphporm for caching. This is for testing purposes
@@ -29,31 +35,38 @@ class Builder {
 		$this->time = $time;
 	}
 
+	public function loadModule(Module $module) {
+		$this->modules[get_class($module)] = $module;
+	}
+
 	public function output($data = null, $document = false) {
-		$locale = $this->getLocale();
-		$data = new Hook\DataFunction(new \SplObjectStorage(), $data, $locale, $this->baseDir);
 		$headers = [];
-		
-		$propertyBuilder = new PropertyBuilder($this);
-		$propertyBuilder->registerBasicProperties($data, $locale, $headers, $this->formatters);
+
+		$elementData = new \Transphporm\Hook\ElementData(new \SplObjectStorage(), $data);
+		$data = new FunctionSet($elementData);
 
 		$cachedOutput = $this->loadTemplate();
 		//To be a valid XML document it must have a root element, automatically wrap it in <template> to ensure it does
 		$template = new Template($this->isValidDoc($cachedOutput['body']) ? str_ireplace('<!doctype', '<!DOCTYPE', $cachedOutput['body']) : '<template>' . $cachedOutput['body'] . '</template>' );
+		$valueParser = new Parser\Value($data);
+		$config = new Config($data, $valueParser, $elementData, new Hook\Formatter(), new Parser\CssToXpath($data, $template->getPrefix()), $headers, $this->baseDir);
 
-		$this->processRules($template, $data);
-		
+		foreach ($this->modules as $module) $module->load($config);
+
+		$this->processRules($template, $config);
+
 		$result = ['body' => $template->output($document), 'headers' => array_merge($cachedOutput['headers'], $headers)];
-		$this->cache->write($this->template, $result);		
+		$this->cache->write($this->template, $result);
 		$result['body'] = $this->doPostProcessing($template)->output($document);
 
 		return (object) $result;
 	}
 
-	private function processRules($template, $data) {
-		$valueParser = new Parser\Value($data);
-		foreach ($this->getRules($template, $valueParser) as $rule) {
-			if ($rule->shouldRun($this->time)) $this->executeTssRule($rule, $template, $data, $valueParser);			
+	private function processRules($template, $config) {
+		$rules = $this->getRules($template, $config);
+
+		foreach ($rules as $rule) {
+			if ($rule->shouldRun($this->time)) $this->executeTssRule($rule, $template, $config);
 		}
 	}
 
@@ -64,25 +77,27 @@ class Builder {
 	}
 
 	//Process a TSS rule e.g. `ul li {content: "foo"; format: bar}
-	private function executeTssRule($rule, $template, $data, $valueParser) {
+	private function executeTssRule($rule, $template, $config) {
 		$rule->touch();
-		$hook = new Hook\PropertyHook($rule->properties, new Hook\PseudoMatcher($rule->pseudo, $data), $valueParser);
-		foreach ($this->registeredProperties as $name => $property) $hook->registerProperty($name, $property);
+
+		$pseudoMatcher = $config->createPseudoMatcher($rule->pseudo);
+		$hook = new Hook\PropertyHook($rule->properties, $this->baseDir, $config->getLine(), $rule->file, $rule->line, $pseudoMatcher, $config->getValueParser(), $config->getFunctionSet());
+		$config->loadProperties($hook);
 		$template->addHook($rule->query, $hook);
 	}
 
 	//Load a template, firstly check if it's a file or a valid string
 	private function loadTemplate() {
-		if (trim($this->template)[0] !== '<') {			
+		if (trim($this->template)[0] !== '<') {
 			$xml = $this->cache->load($this->template, filemtime($this->template));
 			return $xml ? $xml : ['body' => file_get_contents($this->template), 'headers' => []];
 		}
-		else return ['body' => $this->template, 'headers' => []];	
+		else return ['body' => $this->template, 'headers' => []];
 	}
 
 	//Load the TSS rules either from a file or as a string
 	//N.b. only files can be cached
-	private function getRules($template, $valueParser) {		
+	private function getRules($template, $config) {
 		if (is_file($this->tss)) {
 			$this->baseDir = dirname(realpath($this->tss)) . DIRECTORY_SEPARATOR;
 			//The cache for the key: the filename and template prefix
@@ -91,35 +106,18 @@ class Builder {
 			$key = $this->tss . $template->getPrefix() . $this->baseDir;
 			//Try to load the cached rules, if not set in the cache (or expired) parse the supplied sheet
 			$rules = $this->cache->load($key, filemtime($this->tss));
-			if (!$rules) return $this->cache->write($key, (new Parser\Sheet(file_get_contents($this->tss), $this->baseDir, $valueParser, $template->getPrefix()))->parse());
+
+			if (!$rules) return $this->cache->write($key, (new Parser\Sheet(file_get_contents($this->tss), $this->tss, $config->getCssToXpath(), $config->getValueParser()))->parse());
 			else return $rules;
 		}
-		else return (new Parser\Sheet($this->tss, $this->baseDir, $valueParser, $template->getPrefix()))->parse();
+		else return (new Parser\Sheet($this->tss, $this->baseDir, $config->getCssToXpath(), $config->getValueParser()))->parse();
 	}
 
 	public function setCache(\ArrayAccess $cache) {
 		$this->cache = new Cache($cache);
 	}
 
-	private function getLocale() {
-		if (is_array($this->locale)) return $this->locale;
-		else if (strlen($this->locale) > 0) return json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Formatter' . DIRECTORY_SEPARATOR . 'Locale' . DIRECTORY_SEPARATOR . $this->locale . '.json'), true);
-		else return json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'Formatter' . DIRECTORY_SEPARATOR . 'Locale' . DIRECTORY_SEPARATOR . 'enGB.json'), true);
-	}
-
-	public function registerProperty($name, Property $property) {
-		$this->registeredProperties[$name] = $property;
-	}
-
-	public function registerFormatter($formatter) {
-		$this->formatters[] = $formatter;
-	}
-
-	public function setLocale($locale) {
-		$this->locale = $locale;
-	}
-
 	private function isValidDoc($xml) {
-		return strpos($xml, '<!') === 0 || strpos($xml, '<?') === 0;
+		return (strpos($xml, '<!') === 0 && strpos($xml, '<!--') !== 0) || strpos($xml, '<?') === 0;
 	}
 }

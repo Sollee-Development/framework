@@ -5,21 +5,36 @@
         <meta charset="utf-8" />
         <!-- This allows the pages to scale well on mobile -->
         <meta name='viewport' content="width=device-width, initial-scale=1" />
-        <!-- Skeleton -->
-        <link rel="stylesheet" href="css/skeleton/normalize.css" />
-        <link rel="stylesheet" href="css/skeleton/skeleton.css" />
+        <base />
+        <meta id="resources" />
     </head>
     <body>
         <div id='body_wrapper'>
-            <header>
-                
+            <header id='title'>
+                <h1>Page Title</h1>
             </header>
-            <main>
-
-            </main>
+            <header id='menu'>
+              <nav class='container'></nav>
+            </header>
+            <div id="messages" class="container">
+              <div>
+                  <i class="fa fa-check success" aria-hidden="true"></i>
+                  <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
+                  <span class="message"></span>
+              </div>
+            </div>
+            <main class="container"></main>
             <footer>
-
+            <div class="container">
+              <div id="extraFooterSpace"></div>
+              <div>
+                  <a href="http://www.solleedevelopment.com">Created by Sollee Development</a>
+              </div>
+              <div>
+                  <a id="back_to_top">Back to Top <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+              </div>
             </footer>
         </div>
+        <!-- Wrapper div to help keep footer at bottom -->
     </body>
 </html>

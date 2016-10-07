@@ -6,38 +6,64 @@
  * @version         1.0                                                             */
 namespace Transphporm\Property;
 class Repeat implements \Transphporm\Property {
-	private $data;
+	private $functionSet;
+	private $elementData;
+	private $baseDir;
+	private $line;
 
-	public function __construct($data) {
-		$this->data = $data;
+	public function __construct(\Transphporm\FunctionSet $functionSet, \Transphporm\Hook\ElementData $elementData, &$baseDir, &$line) {
+		$this->functionSet = $functionSet;
+		$this->elementData = $elementData;
+		$this->baseDir = &$baseDir;
+		$this->line = &$line;
 	}
 
-	public function run($value, \DomElement $element, \Transphporm\Hook\PropertyHook $rule)  {
+	public function run(array $values, \DomElement $element, array $rules, \Transphporm\Hook\PseudoMatcher $pseudoMatcher, array $properties = []) {
+		$values = $this->fixEmpty($values);
 		if ($element->getAttribute('transphporm') === 'added') return $element->parentNode->removeChild($element);
+		$max = $this->getMax($values);
+		$count = 0;
 
-		foreach ($value as $key => $iteration) {
-			$clone = $element->cloneNode(true);
-			//Mark this node as having been added by transphporm
-			$clone->setAttribute('transphporm', 'added');
-			$this->data->bind($clone, $iteration, 'iteration');
-			$this->data->bind($clone, $key, 'key');
-			$element->parentNode->insertBefore($clone, $element);
-
+		foreach ($values[0] as $key => $iteration) {
+			if ($count+1 > $max) break;
+			$clone = $this->cloneElement($element, $iteration, $key, $count++);
 			//Re-run the hook on the new element, but use the iterated data
-			$newRules = $rule->getRules();
 			//Don't run repeat on the clones element or it will loop forever
-			unset($newRules['repeat']);
-
-			$this->createHook($newRules, $rule)->run($clone);
+			unset($rules['repeat']);
+			$this->createHook($rules, $pseudoMatcher, $properties)->run($clone);
 		}
-		//Flag the original element for removal
-		$element->setAttribute('transphporm', 'remove');
+		//Remove the original element
+		$element->parentNode->removeChild($element);
 		return false;
 	}
 
-	private function createHook($newRules, $rule) {
-		$hook = new \Transphporm\Hook\PropertyHook($newRules, $rule->getPseudoMatcher(), new \Transphporm\Parser\Value($this->data));
-		foreach ($rule->getProperties() as $name => $property) $hook->registerProperty($name, $property);
+	private function fixEmpty($value) {
+		if (empty($value[0])) $value[0] = [];
+		return $value;
+	}
+
+	private function cloneElement($element, $iteration, $key, $count) {
+		$clone = $element->cloneNode(true);
+		$this->tagElement($clone, $count);
+
+		$this->elementData->bind($clone, $iteration, 'iteration');
+		$this->elementData->bind($clone, $key, 'key');
+		$element->parentNode->insertBefore($clone, $element);
+		return $clone;
+	}
+
+	private function tagElement($element, $count) {
+		//Mark all but one of the nodes as having been added by transphporm, when the hook is run again, these are removed
+		if ($count > 0) $element->setAttribute('transphporm', 'added');
+	}
+
+	private function getMax($values) {
+		return isset($values[1]) ? $values[1] : PHP_INT_MAX;
+	}
+
+	private function createHook($newRules, $pseudoMatcher, $properties) {
+		$hook = new \Transphporm\Hook\PropertyHook($newRules, $this->baseDir, $this->line, $this->baseDir, $this->line, $pseudoMatcher, new \Transphporm\Parser\Value($this->functionSet), $this->functionSet);
+		foreach ($properties as $name => $property) $hook->registerProperty($name, $property);
 		return $hook;
 	}
 }

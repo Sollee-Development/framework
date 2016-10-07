@@ -14,6 +14,7 @@ class StaticPages implements \Level2\Router\Rule {
         $json_config = json_decode(file_get_contents($this->static_dir . '/static.json'), true);
         $config = $json_config;
         foreach ($route as $part) {
+            if (!isset($config[$part])) return false;
             $config = $config[$part];
         }
 

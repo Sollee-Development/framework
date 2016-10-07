@@ -1,0 +1,9 @@
+ul li { repeat: json("navConfig.json"); }
+ul li a:attr(href) {content: iteration(target); }
+
+ul li a:iteration[title=true] {content: iteration(title); }
+ul li a:iteration[title=false] {content: iteration(target); format: titlecase; }
+
+ul li:iteration[user=true]:attr(data-user) { content: iteration(user); }
+
+ul li a:[attr(href)=data(url[0])]:attr(class) { content: 'active'; }

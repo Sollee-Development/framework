@@ -1,5 +1,7 @@
 
+// This tss is for the static pages
 
-/* This tss is for the static pages */
+main { content: template("static.xml", data(model.section)); }
+head title, #pageTitle { content: data(model.title); }
 
-main { content: template('Modules/Static/static.xml', data(model.section)); }
+@import "../../Layouts/layout.tss";

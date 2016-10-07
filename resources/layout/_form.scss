@@ -1,0 +1,16 @@
+/******** 4a. FORM code ********/
+input.error {
+  border: 1px dotted red;
+}
+
+label.error {
+  color: red;
+  display: inline;
+  float: none;
+  font-style: italic;
+  margin-left: 10px;
+}
+
+input, select {
+    color: black;
+}

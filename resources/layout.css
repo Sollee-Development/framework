@@ -1,0 +1,150 @@
+/*********************************
+1. HEADER code
+2. NAVIGATION code
+3. MESSAGES code
+4. CONTENT code
+    4a. FORM code
+    4b. TABLE code
+5. FOOTER code
+*********************************/
+/******** 1. HEADER code ********/
+header {
+  display: block;
+  background-color: white;
+  border-bottom: 0;
+  padding-top: 1em; }
+  header h1, header h2 {
+    text-align: center; }
+  header a {
+    text-decoration: none; }
+
+#title {
+  min-height: 2.5em;
+  overflow: auto; }
+
+/****** 2. NAVIGATION code ******/
+#menu {
+  /*padding-top: 1ex;*/
+  min-height: inherit;
+  position: relative;
+  text-align: center; }
+  #menu ul {
+    display: inline-block;
+    min-height: inherit;
+    padding: 0;
+    margin: 0;
+    line-height: 0; }
+    #menu ul li {
+      /*border-left: 1px solid white;*/
+      display: inline-block;
+      list-style: none;
+      padding: 0 10px;
+      min-height: inherit;
+      line-height: 3;
+      box-sizing: border-box;
+      margin: 0; }
+  #menu a, #menu a:visited {
+    color: default;
+    display: inline-block;
+    min-height: inherit;
+    box-sizing: border-box; }
+  #menu a:hover {
+    color: default; }
+
+/****** 3. MESSAGES code ******/
+#messages {
+  margin-bottom: 1rem; }
+  #messages div {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-width: 0.5rem;
+    border-style: solid;
+    border-radius: 2rem; }
+  #messages .success {
+    border-color: #0D5D00;
+    background-color: #64e36c;
+    color: #0d7313; }
+  #messages .error {
+    border-color: #b31212;
+    background-color: #ff9494;
+    color: #8f0a0a; }
+  #messages .fa {
+    margin: 0.5rem; }
+
+/***** 4. CONTENT code ******/
+body {
+  margin: 0;
+  background-color: white;
+  color: black; }
+
+html, body {
+  height: 100%;
+  padding: 0; }
+
+main.container {
+  margin-top: 2rem;
+  padding-bottom: 8em;
+  /* Height of the footer element plus a bit of buffer */ }
+  @media (min-width: 550px) {
+    main.container {
+      padding-bottom: 5em; } }
+  @media (min-width: 875px) {
+    main.container {
+      padding-bottom: 4em; } }
+
+/******** 4a. FORM code ********/
+input.error {
+  border: 1px dotted red; }
+
+label.error {
+  color: red;
+  display: inline;
+  float: none;
+  font-style: italic;
+  margin-left: 10px; }
+
+input, select {
+  color: black; }
+
+/********* 5. FOOTER code **********/
+footer {
+  display: block;
+  padding: 1.5em;
+  padding-top: 3px;
+  background-color: white;
+  color: default;
+  width: 100%;
+  /*height: 3em;*/
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  text-align: center;
+  border-top: 0; }
+  footer a {
+    color: default; }
+
+#body_wrapper {
+  min-height: 100%;
+  position: relative; }
+
+@media (min-width: 550px) {
+  footer {
+    text-align: center;
+    padding: 1rem;
+    padding-top: 3px; }
+    footer .container > div {
+      display: inline-block;
+      padding-bottom: 0.5em;
+      width: 32%; }
+      footer .container > div:not(:first-child) {
+        margin-left: 1%; }
+      footer .container > div:first-child {
+        text-align: left; }
+      footer .container > div:last-child {
+        text-align: right; }
+      footer .container > div a {
+        text-align: left;
+        display: inline; } }
+
+/*# sourceMappingURL=layout.css.map */

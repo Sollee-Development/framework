@@ -1,0 +1,28 @@
+/****** 3. MESSAGES code ******/
+#messages {
+    margin-bottom: 1rem;
+
+    div {
+        margin-top: 1rem;
+        padding: 0.8rem;
+        border: {
+            width: 0.5rem;
+            style: solid;
+            radius: 2rem;
+        }
+    }
+    .success {
+        border-color: #0D5D00;
+        background-color: #64e36c;
+        color: #0d7313;
+    }
+    .error {
+        border-color: #b31212;
+        background-color: #ff9494;
+        color: #8f0a0a;
+    }
+
+    .fa {
+        margin: 0.5rem;
+    }
+}

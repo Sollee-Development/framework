@@ -22,7 +22,7 @@ class ModuleJson  implements \Level2\Router\Rule {
 
 		$method = $_SERVER['REQUEST_METHOD'];
 
-		if ($route[0] == '') $routeName = isset($config->$method->defaultRoute) ? $config->$method->defaultRoute : 'index';
+		if ((isset($route[0]) && $route[0] == '') || !isset($route[0])) $routeName = isset($config->$method->defaultRoute) ? $config->$method->defaultRoute : 'index';
 		else $routeName = array_shift($route);
 
 		if (isset($config->$method->$routeName)) {
@@ -33,9 +33,12 @@ class ModuleJson  implements \Level2\Router\Rule {
 			$matchedRoute = $config->$method->$routeName;
 			$this->dice->addRule('$View', (array) $matchedRoute->view);
 
-			if (isset($matchedRoute->model)) {
+			if (isset($matchedRoute->model) && class_exists($matchedRoute->model->instanceOf)) {
 				$this->dice->addRule('$Model',  json_decode(json_encode($matchedRoute->model), true));
 				$model = $this->dice->create('$Model');
+			}
+			else if (isset($matchedRoute->model) && !class_exists($matchedRoute->model->instanceOf)) {
+				$model = $this->dice->create($matchedRoute->model->instanceOf);
 			}
 			else $model = null;
 
@@ -46,7 +49,7 @@ class ModuleJson  implements \Level2\Router\Rule {
 				if ($matchedRoute->action == '$1') {
 					$action = isset($route[0]) && method_exists($controllerRule['instanceOf'], $route[0]) ? array_shift($route) : $matchedRoute->defaultAction;
 				}
-				else $action = $mathedRoute->action;
+				else $action = $matchedRoute->action;
 
 				$controllerRule['call'] = [];
 
