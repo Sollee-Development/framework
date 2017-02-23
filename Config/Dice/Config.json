@@ -7,7 +7,9 @@
         ]
     },
     "MaphperLoader\\Json" : {
-        "constructParams" : []
+        "constructParams" : [
+            {"instance": ["$config_maphper", "getMaphperFiles"]}
+        ]
     },
     "SimpleCache\\SimpleCache" : {
         "constructParams" : ["tmp"]
