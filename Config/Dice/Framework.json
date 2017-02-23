@@ -24,6 +24,17 @@
             }
         ]
     },
+    "$404error" : {
+        "constructParams" : ["Layouts/layout.xml", "html:header[status] { content: 404;}"]
+    },
+    "Config\\RouterOutput" : {
+        "substitutions" : {
+            "Level2\\Router\\Route" : {
+                "instance" : "Level2\\Router\\Route",
+                "params" : [null, {"instance" : "$404error"}, null, null]
+            }
+        }
+    },
     "$config_dice": {
         "instanceOf" : "Config\\ConfigFiles",
         "constructParams" : [
