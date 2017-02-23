@@ -11,10 +11,19 @@ class Modules {
     public function getModuleSettings() {
         $moduleSettings = [];
         foreach ($this->modules as $moduleName) {
-            if (file_exists('Modules/' . $moduleName . '/' . $this->configFile))
-                $moduleSettings['Modules/' . $moduleName . '/'] =
-                    json_decode(file_get_contents('Modules/' . $moduleName . '/' . $this->configFile), true);
+            $moduleFile = 'Modules/' . $moduleName . '/' . $this->configFile;
+            if ($settings = $this->getFile($moduleFile)) $moduleSettings[] = $settings;
         }
         return $moduleSettings;
+    }
+
+    private function getFile($file): array {
+        if (!file_exists($file)) return false;
+
+        $settings = json_decode(str_replace('{dir}', str_replace(getcwd(), '', dirname($file)), file_get_contents($file)), true);
+        if (isset($settings['extend'])) {
+            $settings = array_merge($this->getFile($settings['extend']), $settings);
+        }
+        return $settings;
     }
 }
