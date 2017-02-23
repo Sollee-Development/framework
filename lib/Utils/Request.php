@@ -13,6 +13,10 @@ class Request {
         return $this->getGlobal('_SESSION', $selector);
     }
 
+    public function server($selector = NULL) {
+        return $this->getGlobal('_SERVER', $selector);
+    }
+
     private function getGlobal($global, $index = NULL) {
         if (empty($index)) return $GLOBALS[$global];
         else {

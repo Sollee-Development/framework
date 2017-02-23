@@ -1,0 +1,19 @@
+{
+    "require" : {
+        "solleer/mvc" : "dev-master",
+        "solleer/transphporm-messages" : "dev-master",
+        "solleer/maphper-loader" : "dev-master",
+        "solleer/router-regexmodulejson" : "dev-master",
+        "level-2/transphporm" : "dev-master",
+        "level-2/maphper" : "dev-master",
+        "level-2/dice" : "dev-master",
+        "level-2/simplecache" : "dev-master",
+        "level-2/axel" : "dev-master",
+        "level-2/router" : "dev-master",
+        "respect/validation" : "1.1.10",
+        "simshaun/recurr" : "dev-master",
+        "nielse63/phpimagecache": "dev-master",
+        "phpmailer/phpmailer": "~5.2",
+        "codeguy/upload" : "dev-master"
+    }
+}
