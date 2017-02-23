@@ -1,8 +1,15 @@
 RewriteEngine On
 
-RewriteCond %{HTTP_HOST} ^(www.)?solleedevelopment.com$ [NC]
+# If your site is an addon domain that is different from your main site
+# but your hosting requires that it is also registered as an
+# addon, this prevents access to the site through the subdomain
+# So if you intend to host this from the main site or as a subdomain
+# then comment it out
+RewriteCond %{HTTP_HOST} ^(www.)?yourmaindomain.com$ [NC]
 RewriteRule ^(.*)$ - [L,R=404]
 
+# Change the following domain to your main site if you want to redirect
+# to the www subdomain
 RewriteCond %{HTTP_HOST} ^example.com$ [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
 
@@ -10,6 +17,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
 
+# This prevents directly accessing certain file
+# types in the file system directly through the browser
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteCond %{REQUEST_FILENAME} \.(php|json|xml|tss)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !index.php
