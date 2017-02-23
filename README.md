@@ -14,7 +14,7 @@ Many of these are from @TomBZombie
 
 Set Up for Use
 -------------
-1. Go to Config\\Database and fill in your database login info
+1. Create a class called Config\\DatabaseSettings with public properties: localUsername, localPassword, onlineUsername, onlinePassword
 
 Notes
 ----------------

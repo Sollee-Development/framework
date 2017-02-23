@@ -1,10 +1,11 @@
 <?php
 namespace Config;
-class DataBase {
+class Database {
     private $environment;
 
-    public function __construct(Environment $environment) {
+    public function __construct(Environment $environment, DatabaseSettings $settings) {
         $this->environment = $environment;
+        $this->settings = $settings;
     }
 
     public function getDBInfo($part) {
@@ -17,12 +18,12 @@ class DataBase {
             }
         }
         elseif ($part === 'username') {
-            if (!$this->environment->getIsOnline()) return "";
-            else return "";
+            if (!$this->environment->getIsOnline()) return $this->settings->localUsername;
+            else return $this->settings->onlineUsername;
         }
         elseif ($part === 'password') {
-            if (!$this->environment->getIsOnline()) return "";
-            else return "";
+            if (!$this->environment->getIsOnline()) return $this->settings->localPassword;
+            else return $this->settings->onlinePassword;
         }
     }
 }
