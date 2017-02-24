@@ -6,21 +6,10 @@ class RouteOutput {
     private $viewData = [];
     private $errorRoute;
 
-    public function __construct(\Level2\Router\Router $router, \Dice\Dice $dice,
-                                Resources $resources, Environment $environment,
-                                \Utils\Request $request, \Level2\Router\Route $errorRoute) {
+    public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute) {
         $this->router = $router;
-        $this->dice = $dice;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
-
-        $this->addViewData([
-            'config' => [
-                'environment' => $environment,
-                'resources' => $resources
-            ],
-            'request' => $request
-        ]);
     }
 
     public function find(string $url = ' ') {

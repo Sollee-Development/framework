@@ -15,6 +15,8 @@ $axel->addModule(new \Axel\Module\PSR0('./lib/'));
 // Set up Dice
 $diceLoaderJson = new Dice\Loader\Json;
 $dice = $diceLoaderJson->load('Config/Dice/Framework.json');
+$diceConfig = $dice->create('$config_dice');
+$dice = $diceLoaderJson->load($diceConfig->getFiles());
 
 $url = !empty($_GET['url']) ? $_GET['url'] : ' ';
 

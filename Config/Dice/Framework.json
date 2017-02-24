@@ -33,7 +33,16 @@
                 "instance" : "Level2\\Router\\Route",
                 "params" : [null, {"instance" : "$404error"}, null, null]
             }
-        }
+        },
+        "call" : [
+            ["addViewData", [{
+                "config" : {
+                    "environment" : {"instance" : "Config\\Environment"},
+                    "resources" : {"instance" : "Config\\Resources"}
+                },
+                "request" : {"instance" : "Utils\\Request"}
+            }]]
+        ]
     },
     "$config_dice": {
         "instanceOf" : "Config\\ConfigFiles",
