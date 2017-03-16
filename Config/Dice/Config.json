@@ -11,12 +11,20 @@
             {"instance": ["$config_maphper", "getMaphperFiles"]}
         ]
     },
+    "Maphper\\DataSource\\Database" : {
+        "constructParams" : [
+            {
+                "editmode" : {"instance" : ["Config\\Environment", "getDebug"]}
+            }
+        ]
+    },
     "SimpleCache\\SimpleCache" : {
         "constructParams" : ["tmp"]
     },
     "Transphporm\\Builder" : {
         "call" : [
-            ["loadModule", [{"instance" : "TransphpormMessages\\Module"}]]
+            ["loadModule", [{"instance" : "TransphpormMessages\\Module"}]],
+            ["loadModule", [{"instance" : "TransphpormXMarkDown\\Module"}]]
         ]
     }
 }

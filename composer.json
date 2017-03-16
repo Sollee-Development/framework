@@ -4,6 +4,7 @@
         "solleer/transphporm-messages" : "dev-master",
         "solleer/maphper-loader" : "dev-master",
         "solleer/router-regexmodulejson" : "dev-master",
+        "solleer/transphporm-xmarkdown-module" : "dev-master",
         "level-2/transphporm" : "dev-master",
         "level-2/maphper" : "dev-master",
         "level-2/dice" : "dev-master",
