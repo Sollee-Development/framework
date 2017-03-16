@@ -23,13 +23,13 @@ base:attr(href) { content: data(config.environment.getRoot()); }
 
 // Messages
 /* Have messages container not show up if there are no messages */
-#messages { bind: messages(); }
-#messages:[data()=false] { display: none; }
+.c-messages { bind: messages(); }
+.c-messages:[data()=false] { display: none; }
 // Add messages */
-#messages > div { repeat: data(); }
-#messages > div:attr(class) { content: iteration(type); }
-#messages > div span.message { content: iteration(message); }
-#messages > div i:not("." + iteration(type)) { display: none; }
+.c-messages__message { repeat: data(); }
+.c-messages__message:attr(class) { content: "c-messages__message--" + iteration(type); }
+.c-messages__content { content: iteration(message); }
+.c-messages__message i:not("." + iteration(type)) { display: none; }
 
 // Footer
 #back_to_top:attr(href) { content: data(params), '#'; }

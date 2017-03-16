@@ -1,8 +1,10 @@
-/****** 3. MESSAGES code ******/
-#messages {
-    margin-bottom: 1rem;
 
-    div {
+
+.c-messages {
+    margin-bottom: 1rem;
+}
+
+    .c-messages__message {
         margin-top: 1rem;
         padding: 0.8rem;
         border: {
@@ -11,18 +13,19 @@
             radius: 2rem;
         }
     }
-    .success {
+
+    .c-messages__message--success {
         border-color: #0D5D00;
         background-color: #64e36c;
         color: #0d7313;
     }
-    .error {
+    .c-messages__message--error {
         border-color: #b31212;
         background-color: #ff9494;
         color: #8f0a0a;
     }
 
-    .fa {
-        margin: 0.5rem;
-    }
-}
+        /* Prevent FontAwesome icons from having too much margin */
+        .c-messages__message .fa {
+            margin: 0.5rem;
+        }

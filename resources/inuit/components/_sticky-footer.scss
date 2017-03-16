@@ -1,0 +1,17 @@
+
+/* This must be applied to the html and body elements
+   and another wrapper element underneath the body */
+.c-sticky-footer__wrapper {
+    height:100%;
+}
+
+.c-sticky-footer {
+    width: 100%;
+    position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.c-sticky-footer--center {
+    text-align: center;
+}

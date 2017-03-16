@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class='c-sticky-footer__wrapper'>
     <head>
         <title>Page Title</title>
         <meta charset="utf-8" />
@@ -9,31 +9,32 @@
         <meta id="resources" />
         <script src="addFontAwesomeLinkForCDN"></script>
     </head>
-    <body>
-        <div id='body_wrapper'>
+    <body class='c-sticky-footer__wrapper'>
+        <div class='c-sticky-footer__wrapper'>
             <header id='title'>
                 <h1>Page Title</h1>
             </header>
             <header id='menu'>
-              <nav class='container'></nav>
+              <nav class='o-wrapper'></nav>
             </header>
-            <div id="messages" class="container">
-              <div>
+            <div id="messages" class="c-messages o-wrapper">
+              <div class="c-messages__message">
                   <i class="fa fa-check success" aria-hidden="true"></i>
                   <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
-                  <span class="message"></span>
+                  <span class="c-messages__content"></span>
               </div>
             </div>
-            <main class="container"></main>
-            <footer>
-            <div class="container">
-              <div id="extraFooterSpace"></div>
-              <div>
-                  <a href="http://www.solleedevelopment.com">Created by Sollee Development</a>
-              </div>
-              <div>
-                  <a id="back_to_top">Back to Top <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-              </div>
+            <main class="o-wrapper"></main>
+            <footer class="c-sticky-footer c-sticky-footer--center">
+                <div class="o-wrapper o-layout">
+                    <div id="extraFooterSpace" class="o-layout__item u-1/1 u-1/3@tablet "></div>
+                    <div class="o-layout__item u-1/1 u-1/3@tablet">
+                      <a href="http://www.solleedevelopment.com">Created by Sollee Development</a>
+                    </div>
+                    <div class="o-layout__item u-1/1 u-1/3@tablet">
+                      <a id="back_to_top">Back to Top <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                    </div>
+                </div>
             </footer>
         </div>
         <!-- Wrapper div to help keep footer at bottom -->
