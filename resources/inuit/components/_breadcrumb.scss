@@ -1,0 +1,7 @@
+
+.c-breadcrumb li:before{
+    content: "» ";
+}
+.c-breadcrumb li:first-child:before{
+    content:normal;
+}

@@ -1,5 +1,5 @@
-<ul>
-    <li>
-        <a href=""></a>
+<ul class="o-list-inline">
+    <li class="o-list-inline__item">
+        <a href="" class="o-list-inline__item"></a>
     </li>
 </ul>

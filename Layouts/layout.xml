@@ -14,10 +14,10 @@
             <header id='title'>
                 <h1>Page Title</h1>
             </header>
-            <header id='menu'>
-              <nav class='o-wrapper'></nav>
+            <header>
+                <nav class='o-wrapper c-site-nav'></nav>
             </header>
-            <div id="messages" class="c-messages o-wrapper">
+            <div class="c-messages o-wrapper">
               <div class="c-messages__message">
                   <i class="fa fa-check success" aria-hidden="true"></i>
                   <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
@@ -25,14 +25,14 @@
               </div>
             </div>
             <main class="o-wrapper"></main>
-            <footer class="c-sticky-footer c-sticky-footer--center">
+            <footer class="c-sticky-footer c-sticky-footer--center c-sticky-footer--align-by-side c-sticky-footer--fwork-style">
                 <div class="o-wrapper o-layout">
-                    <div id="extraFooterSpace" class="o-layout__item u-1/1 u-1/3@tablet "></div>
-                    <div class="o-layout__item u-1/1 u-1/3@tablet">
-                      <a href="http://www.solleedevelopment.com">Created by Sollee Development</a>
+                    <div id="extraFooterSpace" class="o-layout__item u-1/1 u-1/3@tablet c-sticky-footer__item"></div>
+                    <div class="o-layout__item u-1/1 u-1/3@tablet c-sticky-footer__item">
+                        <a href="http://www.solleedevelopment.com">Created by Sollee Development</a>
                     </div>
-                    <div class="o-layout__item u-1/1 u-1/3@tablet">
-                      <a id="back_to_top">Back to Top <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                    <div class="o-layout__item u-1/1 u-1/3@tablet c-sticky-footer__item">
+                        <a id="back_to_top">Back to Top <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </footer>

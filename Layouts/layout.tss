@@ -1,6 +1,4 @@
 
-//head title, #pageTitle { content: data(title); }
-
 /* CDN stuff */
 // Online
 head #resources:data[config.environment.getIsOnline()=true]
@@ -17,7 +15,7 @@ head link:data[config.environment.getIsOnline()=false]:attr(href)
 include { content: template(attr(href)); content-mode: replace; }
 
 // Nav
-#menu { content: template("nav.xml", '', "nav.tss"); }
+.c-site-nav { content: template("nav.xml", '', "nav.tss"); }
 
 base:attr(href) { content: data(config.environment.getRoot()); }
 
