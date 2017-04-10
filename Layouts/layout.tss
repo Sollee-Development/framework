@@ -12,7 +12,11 @@ head link:data[config.environment.getIsOnline()=false]:attr(href)
     { repeat: data(config.resources.getResource("css")); content: iteration(); }
 
 // Allow includes
-include { content: template(attr(href)); content-mode: replace; }
+include {
+    bind: data(attr(data-data));
+    content: template(attr(href), attr(data-selector), attr(data-tss));
+    content-mode: replace;
+}
 
 base:attr(href) { content: data(config.environment.getRoot()); }
 
