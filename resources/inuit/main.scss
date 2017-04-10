@@ -154,6 +154,7 @@
 
 // UTILITIES
 @import "../../node_modules/inuitcss/utilities/utilities.clearfix";
+@import "utilities/no-decoration";
 
 $inuit-offsets: true;
 @import "../../node_modules/inuitcss/utilities/utilities.widths";
