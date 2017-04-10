@@ -16,14 +16,9 @@ class ConfigFiles {
     public function getFiles() {
         $files = $this->defaultFiles;
         foreach ($this->modules->getModuleSettings() as $settings) {
-            if (!isset($settings[$this->property]) || $settings[$this->property] === false) continue;
-            else $file = $settings[$this->property];
-            if (is_array($file)) {
-                foreach ($file as $file) {
-                    $files[] = $file;
-                }
-            }
-            $files[] = $file;
+            $file = $settings[$this->property] ?? [];
+            if (is_array($file)) $files = array_merge($files, $file);
+            else $files[] = $file;
         }
         return $files;
     }
