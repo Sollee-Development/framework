@@ -23,7 +23,7 @@ $url = !empty($_GET['url']) ? $_GET['url'] : ' ';
 // Set up router output
 $routerOutput = $dice->create('Config\\RouteOutput');
 
-$output = $routerOutput->find(explode('/', $url));
+$output = $routerOutput->find($url);
 if (!$output) exit;
 
 // If there are headers, Send them
