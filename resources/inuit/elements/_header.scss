@@ -1,17 +1,4 @@
 header {
-    display: block;
     background-color: $header-color;
     border-bottom: $seperation-border;
-    padding-top: 1em;
-
-    h1, h2 {
-        text-align: center;
-    }
-    a {
-        text-decoration: none;
-    }
-}
-#title {
-    min-height: 2.5em;
-    overflow: auto;
 }
