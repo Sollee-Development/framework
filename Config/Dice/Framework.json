@@ -2,7 +2,8 @@
     "Config\\Environment" : {
         "constructParams" : [
             "github/framework"
-        ]
+        ],
+        "shared" : true
     },
     "Config\\Modules" : {
         "constructParams" : [
@@ -26,9 +27,10 @@
         ]
     },
     "$404error" : {
+        "instanceOf" : "Transphporm\\Builder",
         "constructParams" : ["Layouts/layout.xml", "html:header[status] { content: 404;}"]
     },
-    "Config\\RouterOutput" : {
+    "Config\\RouteOutput" : {
         "substitutions" : {
             "Level2\\Router\\Route" : {
                 "instance" : "Level2\\Router\\Route",
@@ -48,7 +50,7 @@
     "$config_dice": {
         "instanceOf" : "Config\\ConfigFiles",
         "constructParams" : [
-            "dice"
+            "dice",
             ["Config/Dice/Config.json", "Config/Dice/Framework.json"]
         ]
     },
@@ -63,7 +65,7 @@
             "Dice\\Dice" : {
                 "instance" : ["Dice\\Loader\\Json", "load"],
                 "params" : [
-                    {"instance": ["$config_dice", "getDiceFiles"]}
+                    {"instance": ["$config_dice", "getFiles"]}
                 ]
             }
         }
@@ -71,7 +73,7 @@
     "Level2\\Router\\Router" : {
         "call" : [
             ["addRule", [{"instance" : "Config\\Router\\StaticPages"}]],
-            ["addRule", [{"instance" : "Config\\Router\\ModuleJson"}]],
+            ["addRule", [{"instance" : "Solleer\\Router\\RegexModuleJson"}]],
             ["addRule", [{"instance" : "Config\\Router\\ModulePhp"}]]
         ]
     }
