@@ -15,7 +15,9 @@
                 <h1>Page Title</h1>
             </header>
             <header>
-                <nav class='o-wrapper c-site-nav'></nav>
+                <nav class='o-wrapper c-site-nav'>
+                    <include href="/Layouts/nav.xml" data-tss="/Layouts/nav.tss" />
+                </nav>
             </header>
             <div class="c-messages o-wrapper">
               <div class="c-messages__message">

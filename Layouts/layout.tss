@@ -14,9 +14,6 @@ head link:data[config.environment.getIsOnline()=false]:attr(href)
 // Allow includes
 include { content: template(attr(href)); content-mode: replace; }
 
-// Nav
-.c-site-nav { content: template("nav.xml", '', "nav.tss"); }
-
 base:attr(href) { content: data(config.environment.getRoot()); }
 
 // Messages
