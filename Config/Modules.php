@@ -17,7 +17,7 @@ class Modules {
         return $moduleSettings;
     }
 
-    private function getFile($file): array {
+    private function getFile($file) {
         if (!file_exists($file)) return false;
 
         $settings = json_decode(str_replace('{dir}', str_replace(getcwd(), '', dirname($file)), file_get_contents($file)), true);
