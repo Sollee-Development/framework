@@ -29,7 +29,7 @@ class RouteOutput {
         $output = $this->addViewData([
             'model' => $route->getModel(),
             'url' => explode('/', $url),
-            'params' => $this->request->get('url');
+            'params' => $this->request->get('url')
         ]);
 
         return $route->getView()->output($this->viewData);
