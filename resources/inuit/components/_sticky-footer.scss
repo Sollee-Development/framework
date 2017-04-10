@@ -1,51 +1,56 @@
 
 $sticky-footer-breakpoint: tablet;
 
-/* This must be applied to the html and body elements
-   and another wrapper element underneath the body */
-.c-sticky-footer__wrapper {
+/* This must be applied to the html and body elements */
+.c-sticky-footer__root {
     height:100%;
 }
 
-    .c-sticky-footer__prev-elem {
-        padding-bottom: $inuit-global-spacing-unit * 4 + $inuit-global-spacing-unit-small;
-
-        @include mq($from: $sticky-footer-breakpoint) {
-            padding-bottom: $inuit-global-spacing-unit * 2 + $inuit-global-spacing-unit-small;
-        }
+    /* This must be applied to another wrapper element underneath the body */
+    .c-sticky-footer__wrapper {
+        position: relative;
+        min-height: 100%;
     }
 
-    .c-sticky-footer {
-        width: 100%;
-        position: absolute;
-    	bottom: 0;
-    	left: 0;
-    }
+        .c-sticky-footer__prev-elem {
+            padding-bottom: $inuit-global-spacing-unit * 4 + $inuit-global-spacing-unit-small;
 
-    .c-sticky-footer--center {
-        text-align: center;
-    }
-
-    .c-sticky-footer--fwork-style {
-        padding: 1.5em;
-        padding-top: 3px;
-        background-color: $footer-bgcolor;
-        color: $footer-color;
-        border-top: $seperation-border;
-    }
-
-    .c-sticky-footer--align-by-side {
-
-        .c-sticky-footer__item {
             @include mq($from: $sticky-footer-breakpoint) {
-                &:first-child {
-                    text-align: left;
-                }
-                &:last-child {
-                    text-align: right;
-                }
+                padding-bottom: $inuit-global-spacing-unit * 2 + $inuit-global-spacing-unit-small;
             }
         }
 
+        .c-sticky-footer {
+            width: 100%;
+            position: absolute;
+        	bottom: 0;
+        	left: 0;
+        }
 
-    }
+        .c-sticky-footer--center {
+            text-align: center;
+        }
+
+        .c-sticky-footer--fwork-style {
+            padding: 1.5em;
+            padding-top: 3px;
+            background-color: $footer-bgcolor;
+            color: $footer-color;
+            border-top: $seperation-border;
+        }
+
+        .c-sticky-footer--align-by-side {
+
+            .c-sticky-footer__item {
+                @include mq($from: $sticky-footer-breakpoint) {
+                    &:first-child {
+                        text-align: left;
+                    }
+                    &:last-child {
+                        text-align: right;
+                    }
+                }
+            }
+
+
+        }
