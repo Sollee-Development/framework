@@ -12,11 +12,11 @@
  **/
 
 // Set up Axel autoloader
-require_once __DIR__ . "/../lib/Axel/axel.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 $axel = new \Axel\Axel;
-$axel->addModule(new \Axel\Module\PSR0(__DIR__ . "/../lib/"));
-$axel->addModule(new \Axel\Module\PSR0(__DIR__ . '/../Modules/'));
-$axel->addModule(new \Axel\Module\PSR0(__DIR__ . '/../Config/', '\\Config'));
+$axel->addModule(new \Axel\Module\PSR4(__DIR__ . "/../lib/"));
+$axel->addModule(new \Axel\Module\PSR4(__DIR__ . '/../Modules/'));
+$axel->addModule(new \Axel\Module\PSR4(__DIR__ . '/../Config/', '\\Config'));
 
 $diceLoaderJson = new Dice\Loader\Json;
 $dice = $diceLoaderJson->load(__DIR__ . '/../Config/Dice/Framework.json');
