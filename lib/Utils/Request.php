@@ -17,11 +17,12 @@ class Request {
         return $this->getGlobal('_SERVER', $selector);
     }
 
+    public function files($selector = NULL) {
+        return $this->getGlobal('_FILES', $selector);
+    }
+
     private function getGlobal($global, $index = NULL) {
-        if (empty($index)) return $GLOBALS[$global];
-        else {
-            if (isset($GLOBALS[$global][$index])) return $GLOBALS[$global][$index];
-            else return null;
-        }
+        if ($index === null) return $GLOBALS[$global];
+        else return $GLOBALS[$global][$index] ?? null;
     }
 }
