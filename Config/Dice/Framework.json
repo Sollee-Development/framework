@@ -22,7 +22,7 @@
                 "css" : ["resources/inuit/main.css", "resources/slick/slick.css",
                     "resources/slick/slick-theme.css", "resources/jquery-ui-1.11.4.custom/jquery-ui.css",
                     "resources/wickedpicker/stylesheets/wickedpicker.css", "resources/monthpicker/MonthPicker.css",
-                    "resources/layout.css", "Modules/Static/static.css"]
+                    "Modules/Static/static.css"]
             }
         ]
     },
@@ -51,7 +51,7 @@
         "instanceOf" : "Config\\ConfigFiles",
         "constructParams" : [
             "dice",
-            ["Config/Dice/Config.json", "Config/Dice/Framework.json"]
+            ["Config/Dice/Framework.json", "Config/Dice/Config.json"]
         ]
     },
     "$config_maphper": {
@@ -63,7 +63,7 @@
     "*" : {
         "substitutions" : {
             "Dice\\Dice" : {
-                "instance" : ["Dice\\Loader\\Json", "load"],
+                "instance" : ["Config\\Dice\\MultJsonFileLoader", "load"],
                 "params" : [
                     {"instance": ["$config_dice", "getFiles"]}
                 ]
