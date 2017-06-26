@@ -8,7 +8,7 @@
     },
     "MaphperLoader\\Json" : {
         "constructParams" : [
-            {"instance": ["$config_maphper", "getMaphperFiles"]}
+            {"instance": ["$config_maphper", "getFiles"]}
         ]
     },
     "Maphper\\DataSource\\Database" : {
@@ -24,7 +24,8 @@
     "Transphporm\\Builder" : {
         "call" : [
             ["loadModule", [{"instance" : "TransphpormMessages\\Module"}]],
-            ["loadModule", [{"instance" : "TransphpormXMarkDown\\Module"}]]
+            ["loadModule", [{"instance" : "TransphpormXMarkDown\\Module"}]],
+            ["loadModule", [{"instance" : "Config\\Transphporm\\FrameworkModule"}]]
         ]
     }
 }
