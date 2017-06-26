@@ -1,0 +1,6 @@
+input[type="text"]:attr(value),
+input[type="hidden"]:attr(value),
+textarea { content: data(attr(name)); }
+
+select { bind: data(attr(name)); }
+select option:attr(selected):[data()=attr(value)] { content: "selected"; }
