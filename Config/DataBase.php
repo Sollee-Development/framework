@@ -16,8 +16,8 @@ class Database {
             $name = $this->environment->getName();
             if (!$this->environment->getIsOnline()) return $this->defaultDSN . $name;
             // If it is Online
-            else if ($this->environment->getDebug()) return $this->defaultDSN . $this->settings->onlineDBPrefix ?? "" . $name;
-            else return $this->defaultDSN . $this->settings->onlineDBPrefix ?? "" . $this->settings->testDBPrefix ?? "" . $name;
+            else if ($this->environment->getDebug()) return $this->defaultDSN . ($this->settings->onlineDBPrefix ?? "") . $name;
+            else return $this->defaultDSN . ($this->settings->onlineDBPrefix ?? "") . ($this->settings->testDBPrefix ?? "") . $name;
         }
         elseif ($part === 'username') {
             if (!$this->environment->getIsOnline()) return $this->settings->localUsername;
