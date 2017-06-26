@@ -2,7 +2,7 @@
     "require" : {
         "solleer/mvc" : "dev-master",
         "solleer/transphporm-messages" : "dev-master",
-        "solleer/maphper-loader" : "dev-master",
+        "solleer/maphper-loader" : "v1.0.0",
         "solleer/router-regexmodulejson" : "dev-master",
         "solleer/transphporm-xmarkdown-module" : "dev-master",
         "level-2/transphporm" : "dev-master",
@@ -14,7 +14,6 @@
         "respect/validation" : "1.1.10",
         "simshaun/recurr" : "dev-master",
         "nielse63/phpimagecache": "dev-master",
-        "phpmailer/phpmailer": "~5.2",
         "codeguy/upload" : "dev-master"
     }
 }
