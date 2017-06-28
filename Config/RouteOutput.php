@@ -14,9 +14,9 @@ class RouteOutput {
         $this->request = $request;
     }
 
-    public function find(string $url = ' ') {
+    public function find(array $url = []) {
         try {
-            $route = $this->router->find(explode('/', $url));
+            $route = $this->router->find($url);
         }
         catch (Exception $e) {
             if ($this->environment->getDebug()) var_dump($e);
@@ -28,7 +28,7 @@ class RouteOutput {
 
         $output = $this->addViewData([
             'model' => $route->getModel(),
-            'url' => explode('/', $url),
+            'url' => $url,
             'params' => $this->request->get('url')
         ]);
 
