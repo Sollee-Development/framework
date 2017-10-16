@@ -2,7 +2,7 @@
     "require" : {
         "solleer/mvc" : "dev-master",
         "solleer/transphporm-messages" : "dev-master",
-        "solleer/maphper-loader" : "v1.0.0",
+        "solleer/maphper-loader" : "^1.0.0",
         "solleer/router-regexmodulejson" : "dev-master",
         "solleer/transphporm-xmarkdown-module" : "dev-master",
         "level-2/transphporm" : "dev-master",
@@ -11,9 +11,10 @@
         "level-2/simplecache" : "dev-master",
         "level-2/axel" : "dev-master",
         "level-2/router" : "dev-master",
-        "respect/validation" : "1.1.10",
+        "respect/validation" : "^1.1.12",
         "simshaun/recurr" : "dev-master",
         "nielse63/phpimagecache": "dev-master",
         "codeguy/upload" : "dev-master"
-    }
+    },
+    "minimum-stability" : "dev"
 }
