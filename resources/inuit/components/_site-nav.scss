@@ -1,4 +1,28 @@
+/* Site Nav */
+/*
+  Component for building the main site navigation
+ */
 
-.c-site-nav a {
-    text-decoration: none;
+/**
+ * 1. Use the inuit-skeleton link color as the default color
+ */
+
+$site-nav-background-color: #fff !default;
+$site-nav-color: $link-color !default; /* [1] */
+
+.c-site-nav {
+    color: $site-nav-color;
+    background-color: $site-nav-background-color;
 }
+
+    .c-site-nav__item {
+        margin: 0;
+        padding: $inuit-global-spacing-unit;
+    }
+
+        .c-site-nav__link {
+            text-decoration: none;
+        }
+        .c-site-nav__link:hover {
+            text-decoration: underline;
+        }

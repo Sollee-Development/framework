@@ -14,8 +14,8 @@
             <header id='title'>
                 <h1>Page Title</h1>
             </header>
-            <header>
-                <nav class='o-wrapper c-site-nav'>
+            <header class="c-site-nav">
+                <nav class='o-wrapper'>
                     <include href="/Layouts/nav.xml" data-tss="/Layouts/nav.tss" />
                 </nav>
             </header>

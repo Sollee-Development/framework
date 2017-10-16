@@ -1,5 +1,5 @@
 <ul class="o-list-inline">
-    <li class="o-list-inline__item">
-        <a href="" class="o-list-inline__item"></a>
+    <li class="o-list-inline__item c-site-nav__item">
+        <a href="" class="o-list-inline__item c-site-nav__link"></a>
     </li>
 </ul>
