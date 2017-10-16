@@ -11,11 +11,19 @@ Principles to Follow
 Many of these are from @TomBZombie
 
 1. Ensure that the MVC Models are not Domain Models
+2. Use interfaces over inheritance
+3. Keep things loosely coupled
 
 Set Up for Use
 -------------
 1. Create a class called Config\\DatabaseSettings with public properties: localUsername, localPassword, onlineUsername, onlinePassword
+2. After running composer, change the `\Level2\Core\Request` type hint in ModuleJson to `\Utils\Request`
 
 Notes
 ----------------
 This project uses Sass for stylesheets.
+
+Troubleshooting
+-------------------
+## CSS not loading when online
+If the page is issuing a 400 error then it is probably because a file in the framework list cannot be found
