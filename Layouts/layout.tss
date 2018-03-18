@@ -8,7 +8,7 @@ head #resources:data[config.environment.getIsOnline()=false]
     { content: template("resources.xml", ".local *"); content-mode: replace; }
 head script:data[config.environment.getIsOnline()=false]:attr(src)
     { repeat: data(config.resources.getResource("js")); content: iteration(); }
-head link:data[config.environment.getIsOnline()=false]:attr(href)
+head link[rel="stylesheet"]:data[config.environment.getIsOnline()=false]:attr(href)
     { repeat: data(config.resources.getResource("css")); content: iteration(); }
 
 // Allow includes
