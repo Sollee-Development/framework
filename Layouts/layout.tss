@@ -2,14 +2,10 @@
 /* CDN stuff */
 // Online
 head #resources:data[config.environment.getIsOnline()=true]
-    { content: template("resources.xml", ".online *"); content-mode: replace; }
+    { content: template("resources.xml", ".online *", "resources.tss"); content-mode: replace; }
 // Local
 head #resources:data[config.environment.getIsOnline()=false]
-    { content: template("resources.xml", ".local *"); content-mode: replace; }
-head script:data[config.environment.getIsOnline()=false]:attr(src)
-    { repeat: data(config.resources.getResource("js")); content: iteration(); }
-head link[rel="stylesheet"]:data[config.environment.getIsOnline()=false]:attr(href)
-    { repeat: data(config.resources.getResource("css")); content: iteration(); }
+    { content: template("resources.xml", ".local *", "resources.tss"); content-mode: replace; }
 
 // Allow includes
 include {

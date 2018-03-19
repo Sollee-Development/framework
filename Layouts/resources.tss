@@ -1,0 +1,5 @@
+
+script:data[config.environment.getIsOnline()=false]:attr(src)
+{ repeat: data(config.resources.getResource("js")); content: iteration(); }
+link[rel="stylesheet"]:data[config.environment.getIsOnline()=false]:attr(href)
+{ repeat: data(config.resources.getResource("css")); content: iteration(); }

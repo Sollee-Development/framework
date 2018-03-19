@@ -1,8 +1,9 @@
-input[type="text"]:attr(value),
-input[type="hidden"]:attr(value),
-input[type="checkbox"]:attr(value),
-input[type="radio"]:attr(value),
-textarea { content: data(attr(name)); }
+.tss-form-data-fill:attr(value),
+textarea.tss-form-data-fill {
+    content: data(attr(name));
+}
 
-select { bind: data(attr(name)); }
-select option:attr(selected):[data()=attr(value)] { content: "selected"; }
+.tss-form-data-select:attr(selected):[data(attr(name))=attr(value)] { content: "selected"; }
+
+select.tss-form-data-select { bind: data(attr(name)); }
+select.tss-form-data-select option:attr(selected):[data()=attr(value)] { content: "selected"; }
