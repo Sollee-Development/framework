@@ -147,13 +147,15 @@
 @import "components/messages";
 @import "components/breadcrumb";
 @import "components/site-nav";
-
+@import "components/title";
+@import "components/buttons";
 
 
 
 // UTILITIES
 @import "../../node_modules/inuitcss/utilities/utilities.clearfix";
 @import "utilities/no-decoration";
+@import "utilities/align";
 
 $inuit-offsets: true;
 @import "../../node_modules/inuitcss/utilities/utilities.widths";

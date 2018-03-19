@@ -2,8 +2,14 @@
    Component for the site title
   */
 
-
+.c-title--space-around {
+    padding: $inuit-global-spacing-unit-tiny;
+}
 
 .c-title--center {
     text-align: center;
 }
+
+    .c-title__text-cont {
+        margin-bottom: 0;
+    }
