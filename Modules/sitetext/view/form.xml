@@ -1,0 +1,6 @@
+<h2>Edit Site Text</h2>
+<form method="POST">
+    <input type="hidden" name="site_location" value="" class="tss-form-data-fill"/>
+    <div><textarea name="markdown" class="tss-form-data-fill u-1/1 u-large-height" ><textarea></div>
+    <button type="submit" class="c-btn c-btn--primary">Save</button>
+</form>

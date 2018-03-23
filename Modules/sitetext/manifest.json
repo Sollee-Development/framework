@@ -1,0 +1,27 @@
+{
+    "GET" : {
+        "form" : {
+            "model" : {
+                "instanceOf" : "MVC\\Model\\Form\\Save",
+                "substitutions" : {
+                    "ArrayAccess" : {
+                        "instance" : ["MaphperLoader\\Json", "getMaphper"],
+                        "params" : ["sitetext"]
+                    }
+                }
+            },
+            "controller" : { "instanceOf" : "MVC\\Controller\\Form"},
+            "view" : {
+                "instanceOf" : "Transphporm\\Builder",
+                "constructParams" : ["Layouts/layout.xml", "./view/form.tss"]
+            },
+            "action" : "main"
+        }
+    },
+    "POST" : {
+        "form" : {
+            "inherit" : "GET",
+            "action" : "submit"
+        }
+    }
+}

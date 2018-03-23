@@ -1,0 +1,7 @@
+{
+    "sitetext" : {
+        "type" : "database",
+        "table" : "sitetext",
+        "primaryKey" : "site_location"
+    }
+}

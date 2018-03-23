@@ -8,7 +8,7 @@
     "Config\\Modules" : {
         "constructParams" : [
             [
-                ""
+                "sitetext"
             ]
         ]
     },

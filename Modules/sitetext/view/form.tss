@@ -1,0 +1,10 @@
+main { content: template("form.xml"); bind: data(model.getData()); }
+
+@import "Layouts/form.tss";
+
+html:header[location]:data[model.successful] { content: " "; }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "sitetext/" + data(model.getData().site_location); }
+html:message["text/edit"]:data[model.successful=true] { message: "The text was edited"; }
+html:message["text/edit"]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem editing the text", "error"; }
+
+@import "Layouts/layout.tss";
