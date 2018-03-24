@@ -1,5 +1,8 @@
 main { content: template("form.xml"); bind: data(model.getData()); }
 
+html:attr(data-user) { content: "all"; }
+title { content: "Edit Site Text"; }
+
 @import "Layouts/form.tss";
 
 html:header[location]:data[model.successful] { content: " "; }
