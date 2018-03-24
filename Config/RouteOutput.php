@@ -6,23 +6,20 @@ class RouteOutput {
     private $request;
     private $viewData = [];
     private $errorRoute;
+    private $defaultModule;
 
-    public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute, \Utils\Request $request) {
+    public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
+        \Utils\Request $request,
+        $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
         $this->request = $request;
+        $this->defaultModule = $defaultModule;
     }
 
     public function find(array $url = []) {
-        try {
-            $route = $this->router->find($url);
-        }
-        catch (Exception $e) {
-            if ($this->environment->getDebug()) var_dump($e);
-            // If there is no route
-            $route = $this->errorRoute;
-        }
+        $route = $this->getRoute($url);
 
         if (empty($route->getView())) return;
 
@@ -42,6 +39,24 @@ class RouteOutput {
                 header($name . ': ' . $this->environment->getRoot() . $content);
             else header($name . ': ' . $content);
         }
+    }
+
+    private function getRoute($url, $tryagain = true) {
+        try {
+            $route = $this->router->find($url);
+        }
+        catch (\Exception $e) {
+            if ($tryagain) {
+                array_unshift($url, $this->defaultModule);
+                return $this->getRoute($url, false);
+            }
+
+            if ($this->environment->getDebug()) var_dump($e);
+            // If there is no route
+            $route = $this->errorRoute;
+        }
+
+        return $route;
     }
 
     public function addViewData(array $data) {
