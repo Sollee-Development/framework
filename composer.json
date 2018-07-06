@@ -1,6 +1,6 @@
 {
     "require" : {
-        "solleer/mvc" : "^0.9",
+        "solleer/mvc" : "^1.0",
         "solleer/transphporm-messages" : "dev-master",
         "solleer/maphper-loader" : "^1.0.0",
         "solleer/router-regexmodulejson" : "dev-master",

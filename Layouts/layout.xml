@@ -11,7 +11,7 @@
     </head>
     <body class='c-sticky-footer__root'>
         <div class='c-sticky-footer__wrapper'>
-            <header id='title'>
+            <header>
                 <h1>Page Title</h1>
             </header>
             <header class="c-site-nav">
