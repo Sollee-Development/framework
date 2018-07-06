@@ -1,7 +1,7 @@
 {
-    "sitetext" : {
+    "cms_text" : {
         "type" : "database",
-        "table" : "sitetext",
+        "table" : "cms_text",
         "primaryKey" : "site_location"
     }
 }
