@@ -1,18 +1,11 @@
 RewriteEngine On
 
-# If your site is an addon domain that is different from your main site
-# but your hosting requires that it is also registered as an
-# addon, this prevents access to the site through the subdomain
-# So if you intend to host this from the main site or as a subdomain
-# then comment it out
-RewriteCond %{HTTP_HOST} ^(www.)?yourmaindomain.com$ [NC]
-RewriteRule ^(.*)$ - [L,R=404]
-
 # Change the following domain to your main site if you want to redirect
 # to the www subdomain
 RewriteCond %{HTTP_HOST} ^example.com$ [NC]
 RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
 
+# Route everything through index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
@@ -20,13 +13,13 @@ RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
 # This prevents directly accessing certain file
 # types in the file system directly through the browser
 RewriteCond %{REQUEST_FILENAME} -f
-RewriteCond %{REQUEST_FILENAME} \.(php|json|xml|tss)$ [NC]
+RewriteCond %{REQUEST_FILENAME} \.(php|json|xml|tss|log)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !index.php
 RewriteRule ^(.*)$ - [L,R=404]
 
 
 # 1 year = 31536000
 # 1 Month cache for images
- <filesMatch ".(jpg|jpeg|png|gif)$">
- Header set Cache-Control "max-age=2678400, public"
- </filesMatch>
+<filesMatch ".(jpg|jpeg|png|gif)$">
+    Header set Cache-Control "max-age=2678400, public"
+</filesMatch>
