@@ -1,19 +1,17 @@
 {
     "require" : {
         "solleer/mvc" : "^1.0",
-        "solleer/transphporm-messages" : "dev-master",
-        "solleer/maphper-loader" : "^1.0.0",
+        "solleer/transphporm-messages" : "^1.0",
+        "solleer/maphper-loader" : "^2.0",
         "solleer/router-regexmodulejson" : "dev-master",
         "solleer/transphporm-xmarkdown-module" : "dev-master",
         "level-2/transphporm" : "^1.2.0",
-        "level-2/maphper" : "dev-master",
-        "level-2/dice" : "dev-master#97551e1",
+        "level-2/maphper" : "^0.9",
+        "level-2/dice" : "^3.0",
         "level-2/simplecache" : "dev-master",
         "level-2/axel" : "dev-master",
         "level-2/router" : "dev-master",
-        "respect/validation" : "^1.1.12",
-        "nielse63/phpimagecache": "dev-master",
-        "codeguy/upload" : "dev-master"
+        "respect/validation" : "^1.1.12"
     },
     "minimum-stability" : "dev"
 }
