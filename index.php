@@ -16,10 +16,10 @@ $axel->addModule(new \Axel\Module\PSR4('./Config/', '\\Config'));
 $axel->addModule(new \Axel\Module\PSR4('./lib/'));
 
 // Set up Dice
-$diceLoaderJson = new Config\Dice\MultJsonFileLoader(new Dice\Loader\Json);
+$diceLoaderJson = new Config\Dice\MultJsonFileLoader();
 $dice = $diceLoaderJson->load('Config/Dice/Framework.json');
 $diceConfig = $dice->create('$config_dice');
-$dice = $diceLoaderJson->load($diceConfig->getFiles());
+$dice = $diceLoaderJson->load($diceConfig->getFiles(), $dice);
 
 $url = !empty($_GET['url']) ? $_GET['url'] : ' ';
 

@@ -5,7 +5,7 @@
                 "instanceOf" : "MVC\\Model\\Form\\Save",
                 "substitutions" : {
                     "ArrayAccess" : {
-                        "instance" : ["MaphperLoader\\Json", "getMaphper"],
+                        "Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"],
                         "params" : ["sitetext"]
                     }
                 }

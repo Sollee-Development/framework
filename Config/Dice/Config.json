@@ -1,20 +1,20 @@
 {
     "PDO" : {
         "constructParams" : [
-            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["dsn"]},
-            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["username"]},
-            {"instance" : ["Config\\DataBase", "getDBInfo"], "params" : ["password"]}
+            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["dsn"]},
+            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["username"]},
+            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["password"]}
         ]
     },
     "MaphperLoader\\Json" : {
         "constructParams" : [
-            {"instance": ["$config_maphper", "getFiles"]}
+            {"Dice::INSTANCE": ["$config_maphper", "getFiles"]}
         ]
     },
     "Maphper\\DataSource\\Database" : {
         "constructParams" : [
             {
-                "editmode" : {"instance" : ["Config\\Environment", "getDebug"]}
+                "editmode" : {"Dice::INSTANCE" : ["Config\\Environment", "getDebug"]}
             }
         ]
     },
@@ -23,9 +23,9 @@
     },
     "Transphporm\\Builder" : {
         "call" : [
-            ["loadModule", [{"instance" : "TransphpormMessages\\Module"}]],
-            ["loadModule", [{"instance" : "TransphpormXMarkDown\\Module"}]],
-            ["loadModule", [{"instance" : "Config\\Transphporm\\FrameworkModule"}]]
+            ["loadModule", [{"Dice::INSTANCE" : "TransphpormMessages\\Module"}]],
+            ["loadModule", [{"Dice::INSTANCE" : "TransphpormXMarkDown\\Module"}]],
+            ["loadModule", [{"Dice::INSTANCE" : "Config\\Transphporm\\FrameworkModule"}]]
         ]
     }
 }

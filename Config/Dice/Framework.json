@@ -29,17 +29,17 @@
     "Config\\RouteOutput" : {
         "substitutions" : {
             "Level2\\Router\\Route" : {
-                "instance" : "Level2\\Router\\Route",
-                "params" : [null, {"instance" : "$404error"}, null, null]
+                "Dice::INSTANCE" : "Level2\\Router\\Route",
+                "params" : [null, {"Dice::INSTANCE" : "$404error"}, null, null]
             }
         },
         "call" : [
             ["addViewData", [{
                 "config" : {
-                    "environment" : {"instance" : "Config\\Environment"},
-                    "resources" : {"instance" : "Config\\Resources"}
+                    "environment" : {"Dice::INSTANCE" : "Config\\Environment"},
+                    "resources" : {"Dice::INSTANCE" : "Config\\Resources"}
                 },
-                "request" : {"instance" : "Utils\\Request"}
+                "request" : {"Dice::INSTANCE" : "Utils\\Request"}
             }]]
         ]
     },
@@ -59,18 +59,18 @@
     "*" : {
         "substitutions" : {
             "Dice\\Dice" : {
-                "instance" : ["Config\\Dice\\MultJsonFileLoader", "load"],
+                "Dice::INSTANCE" : ["Config\\Dice\\MultJsonFileLoader", "load"],
                 "params" : [
-                    {"instance": ["$config_dice", "getFiles"]}
+                    {"Dice::INSTANCE": ["$config_dice", "getFiles"]}
                 ]
             }
         }
     },
     "Level2\\Router\\Router" : {
         "call" : [
-            ["addRule", [{"instance" : "Config\\Router\\StaticPages"}]],
-            ["addRule", [{"instance" : "Solleer\\Router\\RegexModuleJson"}]],
-            ["addRule", [{"instance" : "Config\\Router\\ModulePhp"}]]
+            ["addRule", [{"Dice::INSTANCE" : "Config\\Router\\StaticPages"}]],
+            ["addRule", [{"Dice::INSTANCE" : "Solleer\\Router\\RegexModuleJson"}]],
+            ["addRule", [{"Dice::INSTANCE" : "Config\\Router\\ModulePhp"}]]
         ]
     }
 }
