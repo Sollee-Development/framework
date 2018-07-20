@@ -13,8 +13,10 @@ class Request {
         return $this->getGlobal('_SESSION', $selector);
     }
 
+    // Have to use $_SERVER superglobabl because it is not always loaded into $GLOBALS
     public function server($selector = NULL) {
-        return $this->getGlobal('_SERVER', $selector);
+        if ($selector === null) return $_SERVER;
+        else return $_SERVER[$selector] ?? null;
     }
 
     public function files($selector = NULL) {

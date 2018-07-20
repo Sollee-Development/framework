@@ -18,8 +18,8 @@ $axel->addModule(new \Axel\Module\PSR4(__DIR__ . "/../lib/"));
 $axel->addModule(new \Axel\Module\PSR4(__DIR__ . '/../Modules/'));
 $axel->addModule(new \Axel\Module\PSR4(__DIR__ . '/../Config/', '\\Config'));
 
-$diceLoaderJson = new Dice\Loader\Json;
-$dice = $diceLoaderJson->load(__DIR__ . '/../Config/Dice/Framework.json');
+$dice = new \Dice\Dice();
+$dice->addRules(__DIR__ . '/../Config/Dice/Framework.json');
 $config = $dice->create('Config\\Resources');
 $resources = array(
     'js' => $config->getResource("js"),
