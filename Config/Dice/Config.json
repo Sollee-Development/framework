@@ -11,11 +11,9 @@
             {"Dice::INSTANCE": ["$config_maphper", "getFiles"]}
         ]
     },
-    "Maphper\\DataSource\\Database" : {
+    "MaphperLoader\\DataSource\\Database" : {
         "constructParams" : [
-            {
-                "editmode" : {"Dice::INSTANCE" : ["Config\\Environment", "getDebug"]}
-            }
+            {"Dice::INSTANCE" : ["Config\\Environment", "getDebug"]}
         ]
     },
     "SimpleCache\\SimpleCache" : {
