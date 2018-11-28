@@ -4,3 +4,13 @@
 .c-btn--icon-btn {
     padding: $inuit-global-spacing-unit-small;
 }
+
+.c-btn--input-height {
+    height: 38px;
+    padding: {
+        top: 0;
+        bottom: 0;
+        left: $inuit-global-spacing-unit;
+        right: $inuit-global-spacing-unit
+    }
+}

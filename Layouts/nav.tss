@@ -8,4 +8,4 @@ ul li a:iteration[title=false] {content: iteration(target); format: titlecase; }
 
 ul li:iteration[user=true]:attr(data-user) { content: iteration(user); }
 
-ul li a:[attr(href)=data(url[0])]:attr(class) { content: attr(class), ' c-site-nav__link--active'; }
+ul li a:[attr(href)=data(url[0])]:attr(class) { content: attr(class), ' c-site-nav__item--active'; }
