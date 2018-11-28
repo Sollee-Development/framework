@@ -13,7 +13,7 @@ class Database {
 
     public function getDBInfo($part) {
         if ($part === 'dsn') {
-            $name = $this->environment->getName();
+            $name = $this->settings->dbName;
             if (!$this->environment->getIsOnline()) return $this->defaultDSN . $name;
             // If it is Online
             else if ($this->environment->getDebug()) return $this->defaultDSN . ($this->settings->onlineDBPrefix ?? "") . $name;
