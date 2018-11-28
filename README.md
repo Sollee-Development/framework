@@ -17,7 +17,6 @@ Many of these are from @TomBZombie
 Set Up for Use
 -------------
 1. Create a class called Config\\DatabaseSettings with public properties: localUsername, localPassword, onlineUsername, onlinePassword
-2. After running composer, change the `\Level2\Core\Request` type hint in ModuleJson to `\Utils\Request`
 
 Notes
 ----------------

@@ -7,11 +7,12 @@
         "solleer/transphporm-xmarkdown-module" : "dev-master",
         "level-2/transphporm" : "^1.2.0",
         "level-2/maphper" : "^0.9",
-        "level-2/dice" : "^3.0",
+        "level-2/dice" : "dev-master#3315c27 as 3.0",
         "level-2/simplecache" : "dev-master",
         "level-2/axel" : "dev-master",
         "level-2/router" : "dev-master",
-        "respect/validation" : "^1.1.12"
+        "respect/validation" : "^1.1.12",
+        "egulias/email-validator": "2.1.6"
     },
     "minimum-stability" : "dev"
 }
