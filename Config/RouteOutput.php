@@ -7,10 +7,10 @@ class RouteOutput {
     private $viewData = [];
     private $errorRoute;
     private $defaultModule;
+    private $error = null;
 
     public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
-        \Utils\Request $request,
-        $defaultModule = "index") {
+                                \Utils\Request $request, $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
@@ -35,7 +35,7 @@ class RouteOutput {
     public function sendHeaders(array $headers) {
         foreach ($headers as list($name, $content)) {
             if ($name === 'status') http_response_code($content);
-            else if ($name === 'location' && $content[0] !== '.')
+            else if ($name === 'location' && $content[0] !== '.' && strpos($content,'http') === false)
                 header($name . ': ' . $this->environment->getRoot() . $content);
             else header($name . ': ' . $content);
         }
@@ -46,12 +46,13 @@ class RouteOutput {
             $route = $this->router->find($url);
         }
         catch (\Exception $e) {
+            if ($this->error === null) $this->error = $e;
             if ($tryagain) {
                 array_unshift($url, $this->defaultModule);
                 return $this->getRoute($url, false);
             }
 
-            if ($this->environment->getDebug()) var_dump($e);
+            if ($this->environment->getDebug()) var_dump($this->error);
             // If there is no route
             $route = $this->errorRoute;
         }
