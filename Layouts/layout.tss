@@ -22,7 +22,7 @@ base:attr(href) { content: data(config.environment.getRoot()); }
 .c-messages:[data()=false] { display: none; }
 // Add messages */
 .c-messages__message { repeat: data(); }
-.c-messages__message:attr(class) { content: "c-messages__message--" + iteration(type); }
+.c-messages__message:attr(class) { content: attr(class), " c-messages__message c-messages__message--" + iteration(type); }
 .c-messages__content { content: iteration(message); }
 .c-messages__message i:not("." + iteration(type)) { display: none; }
 

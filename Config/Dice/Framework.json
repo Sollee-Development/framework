@@ -16,7 +16,7 @@
         "constructParams" : [
             {
                 "js" : ["node_modules/jquery/dist/jquery.js", "node_modules/jquery-validation/dist/jquery.validate.js",
-                    "resources/slick/slick.js", "resources/custom.js"],
+                    "resources/slick/slick.js", "resources/messageClose.js", "resources/custom.js"],
                 "css" : ["resources/inuit/main.css", "resources/slick/slick.css", "resources/slick/slick-theme.css",
                     "Modules/Static/static.css"]
             }
