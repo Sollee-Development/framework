@@ -3,6 +3,8 @@ Config/DatabaseSettings.php
 node_modules
 **/.sass-cache
 
+.idea
+
 
 #################
 ## Eclipse
