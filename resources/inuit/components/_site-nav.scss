@@ -22,7 +22,9 @@ $site-nav-color: $link-color !default; /* [1] */
 
         .c-site-nav__link {
             text-decoration: none;
+            color: $site-nav-color;
         }
         .c-site-nav__link:hover {
+            color: darken($site-nav-color, 5%);
             text-decoration: underline;
         }
