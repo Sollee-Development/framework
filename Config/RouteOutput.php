@@ -23,7 +23,7 @@ class RouteOutput {
 
         if (empty($route->getView())) return;
 
-        $output = $this->addViewData([
+        $this->addViewData([
             'model' => $route->getModel(),
             'url' => $url,
             'params' => $this->request->get('url')
