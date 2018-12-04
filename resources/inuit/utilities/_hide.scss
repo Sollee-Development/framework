@@ -1,0 +1,15 @@
+
+
+@if (variable-exists(mq-breakpoints)) {
+
+  @each $inuit-bp-name, $inuit-bp-value in $mq-breakpoints {
+
+    @include mq($until: $inuit-bp-name) {
+        .u-hide-before#{$inuit-widths-breakpoint-separator}#{$inuit-bp-name} {
+            display: none;
+        }
+    }
+
+  }
+
+}
