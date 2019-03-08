@@ -16,7 +16,7 @@
             </header>
             <header class="c-site-nav">
                 <nav class='o-wrapper'>
-                    <include href="/Layouts/nav.xml" data-tss="/Layouts/nav.tss" />
+                    <include href="/Layouts/nav/nav.xml" data-tss="/Layouts/nav/nav.tss" />
                 </nav>
             </header>
             <div class="c-messages o-wrapper">

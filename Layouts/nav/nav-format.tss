@@ -1,4 +1,5 @@
-ul li { repeat: json("navConfig.json"); }
+ul li { repeat: data(); }
+
 ul li a:attr(href) {content: iteration(target); }
 
 ul li a:iteration[title=true]:iteration[html=false] {content: iteration(title); }
@@ -9,3 +10,15 @@ ul li a:iteration[title=false] {content: iteration(target); format: titlecase; }
 ul li:iteration[user=true]:attr(data-user) { content: iteration(user); }
 
 ul li a:[attr(href)=data(url[0])]:attr(class) { content: attr(class), ' c-site-nav__item--active'; }
+
+// Dropdowns
+ul li .c-dropdown__btn:iteration[links=false] {
+    display: none;
+}
+ul li:iteration[links!=false]:after {
+    bind: iteration(links);
+    content: template("nav.xml", "", "nav-dropdown.tss");
+}
+ul li:iteration[links!=false]:attr(class) {
+    content: attr(class) + " c-dropdown";
+}
