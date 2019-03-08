@@ -1,5 +1,0 @@
-ul:attr(class) {
-    content: attr(class) + " c-dropdown__cont";
-}
-
-@import "nav-format.tss";

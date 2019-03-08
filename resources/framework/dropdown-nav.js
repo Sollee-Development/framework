@@ -3,8 +3,9 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 $(function () {
-    $('.c-dropdown__btn').click(function () {
-        $(this).next(".c-dropdown__cont").toggle();
+    $('.c-dropdown__btn').click(function (event) {
+        event.preventDefault();
+        $(this).nextAll(".c-dropdown__cont").toggle();
     });
 });
 

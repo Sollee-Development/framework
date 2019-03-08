@@ -17,8 +17,13 @@ ul li .c-dropdown__btn:iteration[links=false] {
 }
 ul li:iteration[links!=false]:after {
     bind: iteration(links);
-    content: template("nav.xml", "", "nav-dropdown.tss");
+    content: template("dropdown-nav.xml", "", "nav-format.tss");
 }
 ul li:iteration[links!=false]:attr(class) {
     content: attr(class) + " c-dropdown";
+}
+
+// For dropdowns that aren't links themselves
+ul li a:iteration[links!=false]:iteration[target=false]:attr(class) {
+    content: attr(class) + " c-dropdown__btn";
 }

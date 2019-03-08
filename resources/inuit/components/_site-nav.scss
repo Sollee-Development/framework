@@ -35,7 +35,14 @@ $site-nav-color: $link-color !default; /* [1] */
     background-color: $site-nav-background-color;
     overflow: auto;
     z-index: 1;
+    font-size: 100%;
 }
+    .c-dropdown__item:not(:first-child) {
+        padding-top: 0;
+    }
+    .c-dropdown__item:first-child {
+        padding-top: $inuit-global-spacing-unit-small;
+    }
 
 .c-dropdown__btn.c-dropdown__btn {
     display: inline-block;
@@ -45,4 +52,7 @@ $site-nav-color: $link-color !default; /* [1] */
     }
     vertical-align: text-bottom;
     cursor: pointer;
+}
+.c-dropdown__btn.c-site-nav__link {
+    vertical-align: bottom;
 }
