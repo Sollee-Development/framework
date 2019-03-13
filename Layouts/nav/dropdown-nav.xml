@@ -1,4 +1,4 @@
-<ul class="c-dropdown__cont o-list-bare">
+<ul class="c-dropdown__cont o-list-bare c-dropdown__cont--hide">
     <li class="c-site-nav__item c-dropdown__item">
         <a href="" class="o-list-inline__item c-site-nav__link"></a>
     </li>

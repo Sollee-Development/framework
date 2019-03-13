@@ -30,7 +30,6 @@ $site-nav-color: $link-color !default; /* [1] */
         }
 
 .c-dropdown__cont {
-    display: none;
     position: absolute;
     background-color: $site-nav-background-color;
     overflow: auto;
@@ -52,6 +51,9 @@ $site-nav-color: $link-color !default; /* [1] */
     }
     vertical-align: text-bottom;
     cursor: pointer;
+}
+.c-dropdown__cont--hide {
+    display: none;
 }
 .c-dropdown__btn.c-site-nav__link {
     vertical-align: bottom;
