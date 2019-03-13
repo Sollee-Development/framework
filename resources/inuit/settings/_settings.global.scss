@@ -16,20 +16,22 @@ $global-transition: (1/3) + s !default;
 //$theme-color-4: ;
 //$theme-color-5: ;
 
+$off-white: #f7f7f7;
+
 
 // Seperation
 $seperation-border: 0; //3px solid white;
 
 // Header
-$header-color: white;
+$header-color: $off-white;
 
 // Nav
 $nav-color: default;
 
 // Content
-$bgcolor: white;
+$bgcolor: $off-white;
 $text-color: black;
 
 // Footer
-$footer-bgcolor: white;
+$footer-bgcolor: $off-white;
 $footer-color: default; //black;
