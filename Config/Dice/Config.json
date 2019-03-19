@@ -25,5 +25,14 @@
             ["loadModule", [{"Dice::INSTANCE" : "TransphpormXMarkDown\\Module"}]],
             ["loadModule", [{"Dice::INSTANCE" : "Config\\Transphporm\\FrameworkModule"}]]
         ]
+    },
+    "$not_auth_view" : {
+        "instanceOf" : "Transphporm\\Builder",
+        "constructParams" : ["Layouts/layout.xml", "html:header[location] { content: ' '; }"]
+    },
+    "$not_auth" : {
+        "instanceOf" : "Level2\\Router\\Route",
+        "constructParams" : [null, {
+            "Dice::INSTANCE": "$not_auth_view"}, null, null]
     }
 }
