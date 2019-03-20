@@ -1,3 +1,6 @@
 {
-    "maphper" : "{dir}/maphper.json"
+    "maphper" : "{dir}/maphper.json",
+    "dice" : [
+        "{dir}/dice.json"
+    ]
 }

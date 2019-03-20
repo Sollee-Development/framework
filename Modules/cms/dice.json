@@ -1,0 +1,10 @@
+{
+    "CMS\\Model\\Text" : {
+        "substitutions" : {
+            "ArrayAccess" : {
+                "Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"],
+                "params" : ["cms_text"]
+            }
+        }
+    }
+}

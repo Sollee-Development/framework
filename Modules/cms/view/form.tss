@@ -5,8 +5,11 @@ title { content: "Edit Site Text"; }
 
 @import "Layouts/form.tss";
 
+
+input[name="site_location"]:attr(value) { content: root(url[2]); }
+
 html:header[location]:data[model.successful] { content: " "; }
-html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "sitetext/" + data(model.getData().site_location); }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "cms/" + data(model.getData().site_location); }
 html:message["text/edit"]:data[model.successful=true] { message: "The text was edited"; }
 html:message["text/edit"]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem editing the text", "error"; }
 

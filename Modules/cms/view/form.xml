@@ -1,6 +1,10 @@
 <h2>Edit Site Text</h2>
+<p>
+The text accepts <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">MarkDown format</a>.
+Not all formats are accepted.
+</p>
 <form method="POST">
-    <input type="hidden" name="site_location" value="" class="tss-form-data-fill"/>
-    <div><textarea name="markdown" class="tss-form-data-fill u-1/1 u-large-height" ><textarea></div>
-    <button type="submit" class="c-btn c-btn--primary">Save</button>
+<input type="hidden" name="site_location" value="" class="tss-form-data-fill"/>
+<div><textarea name="markdown" class="tss-form-data-fill u-1/1" style="height: 30vh" ><textarea></div>
+<button type="submit" class="c-btn c-btn--primary">Save</button>
 </form>

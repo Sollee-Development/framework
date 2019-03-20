@@ -1,0 +1,6 @@
+
+// In the file including this one, bind the text model to the cms elements
+[data-cms]:[data(getText(attr(data-cms)))=true] {
+    content: parsedown(data(getText(attr(data-cms))));
+    format: html;
+}

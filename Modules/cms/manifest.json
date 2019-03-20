@@ -1,4 +1,12 @@
 {
+    "authorize" : [
+        {
+            "routes" : ["form"],
+            "instanceOf" : "Solleer\\User\\Authorize",
+            "call" : ["user", []],
+            "redirect" : "$not_auth"
+        }
+    ],
     "GET" : {
         "form" : {
             "model" : {
@@ -6,7 +14,7 @@
                 "substitutions" : {
                     "ArrayAccess" : {
                         "Dice::INSTANCE" : ["MaphperLoader\\Json", "getMaphper"],
-                        "params" : ["sitetext"]
+                        "params" : ["cms_text"]
                     }
                 }
             },

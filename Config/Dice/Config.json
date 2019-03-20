@@ -22,7 +22,6 @@
     "Transphporm\\Builder" : {
         "call" : [
             ["loadModule", [{"Dice::INSTANCE" : "TransphpormMessages\\Module"}]],
-            ["loadModule", [{"Dice::INSTANCE" : "TransphpormXMarkDown\\Module"}]],
             ["loadModule", [{"Dice::INSTANCE" : "Config\\Transphporm\\FrameworkModule"}]]
         ]
     },
