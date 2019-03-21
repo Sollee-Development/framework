@@ -2,7 +2,7 @@
     "name": "framework",
     "dependencies": {
         "inuitcss": "^6.0.0",
-        "inuitcss-skeleton-plugin": ">=0.1.0",
+        "inuitcss-skeleton-plugin": "^0.1.9",
         "jquery": "3.1.1",
         "jquery-validation": "1.16.0",
         "sass-mq": "^5.0.0"
