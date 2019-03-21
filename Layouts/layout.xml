@@ -20,11 +20,13 @@
                 </nav>
             </header>
             <div class="c-messages o-wrapper">
-              <div class="c-messages__message">
-                  <i class="fa fa-check success" aria-hidden="true"></i>
-                  <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
-                  <span class="c-messages__content"></span>
-              </div>
+                <div class="c-messages__message o-pack o-pack--middle o-pack--auto">
+                    <div class="o-pack__item" style="width: 1rem;">
+                        <i class="fa fa-check success" aria-hidden="true"></i>
+                        <i class="fa fa-exclamation-circle error" aria-hidden="true"></i>
+                    </div>
+                    <span class="c-messages__content o-pack__item"></span>
+                </div>
             </div>
             <main class="o-wrapper c-sticky-footer__prev-elem"></main>
             <footer class="c-sticky-footer c-sticky-footer--center c-sticky-footer--align-by-side c-sticky-footer--fwork-style">
