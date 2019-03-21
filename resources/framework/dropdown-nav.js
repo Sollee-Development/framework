@@ -3,9 +3,10 @@
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 $(function () {
-    $('.c-dropdown__btn').click(function (event) {
+    $('.c-site-nav').on('click', '.c-dropdown__btn', function (event) {
         event.preventDefault();
         $(this).nextAll(".c-dropdown__cont").toggleClass('c-dropdown__cont--hide');
+        $(this).nextAll(".mean-expand").click();
     });
 });
 
