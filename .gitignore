@@ -13,6 +13,7 @@ vendor/
 
 #remove this on the actual project
 composer.lock
+package-lock.json
 
 #################
 ## Eclipse
