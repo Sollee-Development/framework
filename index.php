@@ -10,10 +10,10 @@ date_default_timezone_set('America/New_York');
 $simpleCache = new \SimpleCache\SimpleCache('./tmp');
 // Set up Axel autoloader
 $axel = new \Axel\Axel($simpleCache);
-$axel->addModule(new \Axel\Module\PSR4('./Modules/'));
-$axel->addModule(new \Axel\Module\Library($axel, './Modules/'));
-$axel->addModule(new \Axel\Module\PSR4('./Config/', '\\Config'));
-$axel->addModule(new \Axel\Module\PSR4('./lib/'));
+$axel = $axel->addModule(new \Axel\Module\PSR4('./Modules/'));
+$axel = $axel->addModule(new \Axel\Module\PSR4('./Config/', '\\Config'));
+$axel = $axel->addModule(new \Axel\Module\PSR4('./lib/'));
+$axel->register();
 
 // Set up Dice
 $diceLoaderJson = new Config\Dice\MultJsonFileLoader();
