@@ -3,6 +3,7 @@ textarea.tss-form-data-fill {
     content: data(attr(name));
 }
 
+.tss-form-data-checked:attr(checked):[data(attr(name))=attr(value)] { content: "checked"; }
 .tss-form-data-select:attr(selected):[data(attr(name))=attr(value)] { content: "selected"; }
 
 select.tss-form-data-select { bind: data(attr(name)); }
