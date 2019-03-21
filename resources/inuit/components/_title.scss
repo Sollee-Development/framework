@@ -1,15 +1,31 @@
 /* Title
    Component for the site title
   */
+$title-background-color: #fff !default;
+$title-color: #000 !default;
+
+.c-title {
+    background-color: $title-background-color;
+    color: $title-color;
+}
 
 .c-title--space-around {
     padding: $inuit-global-spacing-unit-tiny;
 }
 
-.c-title--center {
-    text-align: center;
-}
+    .c-title--center {
+        text-align: center;
+    }
 
     .c-title__text-cont {
         margin-bottom: 0;
     }
+
+        .c-title__link {
+            color: $title-color;
+            text-decoration: none;
+        }
+        .c-title__link:hover {
+            color: $title-color;
+            text-decoration: underline;
+        }
