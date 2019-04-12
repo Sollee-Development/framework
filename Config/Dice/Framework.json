@@ -22,6 +22,12 @@
             }
         ]
     },
+    "HTTP2Push\\CacheAware" : {
+        "constructParams" : [
+            "./",
+            {"resources/inuit/main.css" : "stylesheet"}
+        ]
+    },
     "$404error" : {
         "instanceOf" : "Transphporm\\Builder",
         "constructParams" : ["Layouts/layout.xml", "html:header[status] { content: 404;}"]

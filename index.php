@@ -35,4 +35,8 @@ if (!empty($output->headers)) {
     exit;
 }
 
+// Send push headers for css
+$http2push = $dice->create("HTTP2Push\\CookieTrack");
+$http2push->sendHeader();
+
 echo $output->body;
