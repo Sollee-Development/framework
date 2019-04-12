@@ -1,0 +1,16 @@
+{
+    "GET" : {
+        "default" : "index",
+        "index" : {
+            "models" : {
+                "sitetext" : {
+                    "instanceOf" : "CMS\\Model\\Text"
+                }
+            },
+            "view" : {
+                "instanceOf" : "Transphporm\\Builder",
+                "constructParams" : ["Layouts/layout.xml", "./index.tss"]
+            }
+        }
+    }
+}

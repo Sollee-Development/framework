@@ -1,0 +1,9 @@
+main { content: template("index.xml"); }
+
+title { content: "Home"; }
+
+// CMS Content
+[data-cms] { bind: data(model.sitetext); }
+@import "../cms/view/cms-content-loader.tss";
+
+@import "Layouts/layout.tss";
