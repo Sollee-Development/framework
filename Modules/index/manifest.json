@@ -1,10 +1,12 @@
 {
     "GET" : {
-        "default" : "index",
-        "index" : {
+        " " : {
             "models" : {
                 "sitetext" : {
                     "instanceOf" : "CMS\\Model\\Text"
+                },
+                "site_img" : {
+                    "instanceOf" : "CMS\\Model\\Image"
                 }
             },
             "view" : {

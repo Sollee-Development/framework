@@ -1,0 +1,16 @@
+main { content: template("add.xml"); bind: data(model.getData()); }
+
+html:attr(data-user) { content: 'all'; }
+
+title { content: "Update CMS Photo"; }
+
+@import "Layouts/form.tss";
+
+input[name="site_location"]:attr(value) { content: root(url[2]); }
+
+html:header[location]:data[model.successful=true] { content: " "; }
+html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "cms/photos/" + data(model.getData().site_location); }
+html:message[add_pub]:data[model.successful=true] { message: "The photo was updated"; }
+html:message[add_pub]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem updating the photo", "error"; }
+
+@import "Layouts/layout.tss";

@@ -4,6 +4,7 @@ title { content: "Home"; }
 
 // CMS Content
 [data-cms] { bind: data(model.sitetext); }
+[data-cms-photo] { bind: data(model.site_img); }
 @import "../cms/view/cms-content-loader.tss";
 
 @import "Layouts/layout.tss";

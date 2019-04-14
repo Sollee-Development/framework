@@ -4,3 +4,7 @@
     content: parsedown(data(getText(attr(data-cms))));
     format: html;
 }
+
+[data-cms-photo]:attr(src) {
+    content: data(getFileName(attr(data-cms-photo)));
+}

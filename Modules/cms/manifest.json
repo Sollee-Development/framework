@@ -1,7 +1,7 @@
 {
     "authorize" : [
         {
-            "routes" : ["form"],
+            "routes" : ["form", "photos"],
             "instanceOf" : "Solleer\\User\\Authorize",
             "call" : ["user", []],
             "redirect" : "$not_auth"
@@ -24,10 +24,31 @@
                 "constructParams" : ["Layouts/layout.xml", "./view/form.tss"]
             },
             "action" : "main"
+        },
+        "photos" : {
+            "model" : {
+                "instanceOf" : "CMS\\Model\\Form\\UpdateImage",
+                "substitutions" : {
+                    "CMS\\Model\\Form\\SaveImage" : "$cms_photo_file_image_saver",
+                    "League\\Flysystem\\Filesystem" : "$cms_photo_file_system"
+                }
+            },
+            "controller" : {
+                "instanceOf" : "MVC\\Controller\\Form"
+            },
+            "view" : {
+                "instanceOf" : "Transphporm\\Builder",
+                "constructParams" : ["Layouts/layout.xml", "./view/imageForms/add.tss"]
+            },
+            "action" : "main"
         }
     },
     "POST" : {
         "form" : {
+            "inherit" : "GET",
+            "action" : "submit"
+        },
+        "photos" : {
             "inherit" : "GET",
             "action" : "submit"
         }

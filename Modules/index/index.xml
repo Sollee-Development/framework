@@ -1,4 +1,6 @@
 <div>
+    <img data-cms-photo="index" />
+    <a href="cms/photos/index" class="c-btn c-btn--secondary">Edit Photo</a>
     <div data-cms="index">
 
     </div>

@@ -3,5 +3,10 @@
         "type" : "database",
         "table" : "cms_text",
         "primaryKey" : "site_location"
+    },
+    "cms_image" : {
+        "type" : "database",
+        "table" : "cms_image",
+        "primaryKey" : "site_location"
     }
 }
