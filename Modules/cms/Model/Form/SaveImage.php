@@ -1,45 +1,71 @@
 <?php
 namespace CMS\Model\Form;
-class SaveImage implements \MVC\Model\Form {
-    private $image_cache;
-    private $file_path;
+
+use Solleer\Form\{GenericForm, Loadable};
+
+class SaveImage implements GenericForm, Loadable {
     private $saver;
-    private $fileSaver;
-    public $successful = false;
-    public $submitted = false;
+    private $uploader;
+    private $imageCache;
+    private $filePath;
+    private $submitted = false;
+    private $fileErrors = [];
 
-    public function __construct(\MVC\Model\Form\SaveFile $fileSaver, \MVC\Model\Form\Save $saver,
-                                \ImageCache\ImageCache $image_cache, $file_path) {
-        $this->image_cache = $image_cache;
-        $this->file_path = $file_path;
-        $this->fileSaver = $fileSaver;
+    public function __construct(
+        \Solleer\Form\Save $saver,
+        \FileUpload\FileUpload $uploader,
+        \ImageCache\ImageCache $imageCache,
+        string $filePath,
+        bool $submitted = false,
+        array $fileErrors = []
+    ) {
         $this->saver = $saver;
+        $this->uploader = $uploader;
+        $this->imageCache = $imageCache;
+        $this->filePath = $filePath;
+        $this->submitted = $submitted;
+        $this->fileErrors = $fileErrors;
     }
 
-    public function main($data = null) {
-        $this->submitted = false;
-        $this->saver->main($data);
-        return true;
+    public function load($id): self {
+        return new self($this->saver->load($id), $this->uploader, $this->imageCache, $this->filePath, $this->submitted);
     }
 
-    public function submit($data) {
-        $this->submitted = true;
-        if (!$this->fileSaver->submit($data)) return false;
-        $data = $this->saver->getData();
-        $orig_filename = $this->file_path . '/' . $data->file_name;
-        $image_path = explode('/', $this->image_cache->cache($orig_filename));
-        if ($data->file_name !== $image_path[count($image_path)-1]) unlink($orig_filename);
-        else unlink($this->image_cache->cached_filename);
-        $data->file_name = $image_path[count($image_path)-1];
-        $this->saver->submit((array)$data);
-        return true;
-    }
+    public function submit(array $data): self {
+        // Upload File
+        list($files) = $this->uploader->processAll();
+        $uploadedFile = $files[0]; // Only supports uploading a single file
+        $errors = [];
+        if (!$uploadedFile->completed) $errors[] = $uploadedFile->error;
+        $data['file_name'] = $uploadedFile->getFilename();
 
-    public function success() {
-        $this->successful = true;
+        if (!empty($errors)) return new self($this->saver, $this->uploader, $this->imageCache, $this->filePath, true, $errors);
+
+        // Get cached file
+        $uploadedFilePath = $this->filePath . '/' . $data['file_name'];
+        $cachedFileName = explode('/', $this->imageCache->cache($uploadedFilePath));
+        $cachedFileName = $cachedFileName[count($cachedFileName)-1];
+
+        // Delete larger file
+        if ($data['file_name'] !== $cachedFileName) unlink($uploadedFilePath);
+        else unlink($this->imageCache->cached_filename);
+
+        // Save result
+        $data['file_name'] = $cachedFileName;
+        $submittedSaver = $this->saver->submit($data);
+
+        return new self($submittedSaver, $this->uploader, $this->imageCache, $this->filePath, true);
     }
 
     public function getData() {
         return $this->saver->getData();
+    }
+
+    public function getErrors(): array {
+        return array_merge($this->fileErrors, $this->saver->getErrors());
+    }
+
+    public function isSubmitted(): bool {
+        return $this->submitted;
     }
 }

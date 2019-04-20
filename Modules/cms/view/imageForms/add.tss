@@ -8,9 +8,9 @@ title { content: "Update CMS Photo"; }
 
 input[name="site_location"]:attr(value) { content: root(url[2]); }
 
-html:header[location]:data[model.successful=true] { content: " "; }
-html:header[location]:data[model.submitted=true]:data[model.successful=false] { content: "cms/photos/" + data(model.getData().site_location); }
-html:message[add_pub]:data[model.successful=true] { message: "The photo was updated"; }
-html:message[add_pub]:data[model.submitted=true]:data[model.successful=false] { message: "There was a problem updating the photo", "error"; }
+html:header[location]:data[model.isSubmitted()=true]:data[model.getErrors()=false] { content: " "; }
+html:header[location]:data[model.isSubmitted()=true]:data[model.getErrors()=true] { content: "cms/photos/" + data(model.getData().site_location); }
+html:message[add_pub]:data[model.isSubmitted()=true]:data[model.getErrors()=false] { message: "The photo was updated"; }
+html:message[add_pub]:data[model.isSubmitted()=true]:data[model.getErrors()=true] { message: "There was a problem updating the photo", "error"; }
 
 @import "Layouts/layout.tss";

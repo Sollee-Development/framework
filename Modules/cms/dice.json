@@ -1,4 +1,11 @@
 {
+    "$cms_photo_filepath" : {
+        "instanceOf" : "ArrayObject",
+        "constructParams": [["storage/cms"], 0, "ArrayIterator"],
+        "call" : [
+            ["offsetGet", [0], "Dice::CHAIN_CALL"]
+        ]
+    },
     "CMS\\Model\\Text" : {
         "substitutions" : {
             "ArrayAccess" : {
@@ -21,30 +28,18 @@
             }
         },
         "constructParams" : [
-            {"Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]}
+            {"Dice::INSTANCE": "$cms_photo_filepath"}
         ]
     },
-    "$cms_photo_model" : {
-        "instanceOf" : "MVC\\Model\\FileFilter",
-        "constructParams" : [
-            {"Dice::INSTANCE" : "$cms_photo_model_filter" },
-            "storage/cms"
-        ]
-    },
-    "$cms_photo_model_filter" : {
-        "instanceOf" : "MVC\\Model\\Sort",
-        "substitutions" : {"Maphper\\Maphper" : "$cms_image_maphper"},
-        "constructParams" : [
-            "order_num asc"
-        ]
-    },
+
+
+
     "$cms_photo_db_saver" : {
-        "instanceOf" : "MVC\\Model\\Form\\Save",
-        "substitutions" : {"ArrayAccess" : "$cms_image_maphper" },
-        "shared" : true
+        "instanceOf" : "Solleer\\Form\\Save",
+        "substitutions" : {"ArrayAccess" : "$cms_image_maphper" }
     },
     "$cms_photo_deleter" : {
-        "instanceOf" : "MVC\\Model\\Form\\Delete",
+        "instanceOf" : "Solleer\\Form\\Delete",
         "substitutions" : {"ArrayAccess" : "$cms_image_maphper" }
     },
     "$cms_photo_file_system" : {
@@ -52,29 +47,18 @@
         "constructParams" : [
             {
                 "Dice::INSTANCE": "League\\Flysystem\\Adapter\\Local", "params" : [{
-                "Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]}]}
+                "Dice::INSTANCE": "$cms_photo_filepath"}]}
         ]
     },
     "$cms_photo_file_image_saver" : {
         "instanceOf" : "CMS\\Model\\Form\\SaveImage",
         "substitutions" : {
-            "MVC\\Model\\Form\\SaveFile" : "$cms_photo_file_saver",
-            "MVC\\Model\\Form\\Save" : "$cms_photo_db_saver",
-            "ImageCache\\ImageCache" : "$cms_photo_image_cache"
+            "Solleer\\Form\\Save" : "$cms_photo_db_saver",
+            "ImageCache\\ImageCache" : "$cms_photo_image_cache",
+            "FileUpload\\FileUpload" : "$cms_photo_uploader"
         },
         "constructParams" : [
-            { "Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]}
-        ]
-    },
-    "$cms_photo_file_saver" : {
-        "instanceOf" : "MVC\\Model\\Form\\SaveFile",
-        "substitutions" : {
-            "FileUpload\\FileUpload" : {
-                "Dice::INSTANCE": "$cms_photo_uploader"}
-        },
-        "constructParams" : [
-            {
-                "Dice::INSTANCE": "$cms_photo_db_saver"}
+            { "Dice::INSTANCE": "$cms_photo_filepath"}
         ]
     },
     "$cms_photo_uploader" : {
@@ -99,7 +83,7 @@
             ["setPathResolver", [
                 {
                     "Dice::INSTANCE": "FileUpload\\PathResolver\\Simple", "params" : [{
-                    "Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]}]}
+                    "Dice::INSTANCE": "$cms_photo_filepath"}]}
             ]]
         ]
     },
@@ -115,9 +99,9 @@
         "constructParams" : [
             {
                 "cached_image_directory" : {
-                    "Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]},
+                    "Dice::INSTANCE": "$cms_photo_filepath"},
                 "cached_image_url" : {
-                    "Dice::INSTANCE": ["$cms_photo_model", "getFilePath"]},
+                    "Dice::INSTANCE": "$cms_photo_filepath"},
                 "quality" : {
                     "jpeg" : 60,
                     "png" : 8
