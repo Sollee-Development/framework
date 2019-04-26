@@ -1999,11 +1999,6 @@ header {
   border-bottom: 0;
 }
 
-/* This must be applied to the html and body elements */
-.c-sticky-footer__root {
-  height: 100%;
-}
-
 /* Apply this to body and html when using slidebars */
 .c-sticky-footer__root--slidebar-fix {
   overflow: visible;
@@ -2012,7 +2007,7 @@ header {
 /* This must be applied to another wrapper element underneath the body */
 .c-sticky-footer__wrapper {
   position: relative;
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 /* Apply this to the wrapper when using slidebars */
