@@ -17,9 +17,6 @@ class Resources {
             $files = $settings['resources'][$type] ?? [];
             $resources = array_merge($resources, $files);
         }
-        if ($this->environment->getIsOnline()) $resources = array_map(function ($file) {
-            return '../' . $file;
-        }, $resources);
         return $resources;
     }
 }

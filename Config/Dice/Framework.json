@@ -22,10 +22,31 @@
             }
         ]
     },
+    "$js_minify" : {
+        "instanceOf" : "Config\\Minify",
+        "substitutions" : {
+            "MatthiasMullie\\Minify\\Minify" : "MatthiasMullie\\Minify\\JS"
+        },
+        "constructParams" : [
+            {"Dice::INSTANCE" : ["Config\\Resources", "getResource"], "params" : ["js"]}
+        ]
+    },
+    "$css_minify" : {
+        "instanceOf" : "Config\\Minify",
+        "substitutions" : {
+            "MatthiasMullie\\Minify\\Minify" : "MatthiasMullie\\Minify\\CSS"
+        },
+        "constructParams" : [
+            {"Dice::INSTANCE" : ["Config\\Resources", "getResource"], "params" : ["css"]}
+        ]
+    },
     "HTTP2Push\\CacheAware" : {
         "constructParams" : [
             "./",
-            {"resources/inuit/main.css" : "stylesheet"}
+            {
+                "resources/css.min.css" : "stylesheet",
+                "resources/js.min.js" : "script"
+            }
         ]
     },
     "$404error" : {

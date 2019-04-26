@@ -17,9 +17,14 @@ RewriteCond %{REQUEST_FILENAME} \.(php|json|xml|tss|log)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !index.php
 RewriteRule ^(.*)$ - [L,R=404]
 
-
 # 1 year = 31536000
 # 1 Month cache for images
 <filesMatch ".(jpg|jpeg|png|gif)$">
     Header set Cache-Control "max-age=2678400, public"
+</filesMatch>
+
+# 1 week for css and js
+<filesMatch "(js.min.js|css.min.css)$">
+    Header set Cache-Control "max-age=86407, public, no-cache"
+    Header set Content-Encoding gzip
 </filesMatch>

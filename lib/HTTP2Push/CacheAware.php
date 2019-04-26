@@ -18,7 +18,8 @@ class CacheAware {
     private function assetsChangedSince(int $time): array {
         $changed = [];
         foreach ($this->files as $file => $type) {
-            if (filemtime($this->htdocs . \DIRECTORY_SEPARATOR . $file) > $time) {
+            $fullFileName = $this->htdocs . \DIRECTORY_SEPARATOR . $file;
+            if (file_exists($fullFileName) && filemtime($fullFileName) > $time) {
                 $changed[$file] = $type;
             }
         }

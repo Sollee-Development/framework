@@ -1,19 +1,10 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require_once "autoloaders.php";
 
 session_start();
 
 date_default_timezone_set('America/New_York');
-
-// Setup cache for Axel
-$simpleCache = new \SimpleCache\SimpleCache('./tmp');
-// Set up Axel autoloader
-$axel = new \Axel\Axel($simpleCache);
-$axel = $axel->addModule(new \Axel\Module\PSR4('./Modules/'));
-$axel = $axel->addModule(new \Axel\Module\PSR4('./Config/', '\\Config'));
-$axel = $axel->addModule(new \Axel\Module\PSR4('./lib/'));
-$axel->register();
 
 // Set up Dice
 $diceLoaderJson = new Config\Dice\MultJsonFileLoader();

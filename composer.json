@@ -10,6 +10,7 @@
         }
     ],
     "require" : {
+        "matthiasmullie/minify": "dev-master",
         "solleer/form" : "^1.0",
         "solleer/transphporm-messages" : "^1.0",
         "solleer/maphper-loader" : "^3.0",

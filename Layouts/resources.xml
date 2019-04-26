@@ -4,6 +4,6 @@
 </div>
 <div class="online">
     <!-- Resources -->
-    <link rel="stylesheet" href="min/g=css" />
-    <script src="min/g=js"></script>
+    <link rel="stylesheet" href="resources/css.min.css" />
+    <script src="resources/js.min.js"></script>
 </div>
