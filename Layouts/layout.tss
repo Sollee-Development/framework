@@ -1,11 +1,6 @@
 
 /* CDN stuff */
-// Online
-head #resources:data[config.environment.getIsOnline()=true]
-    { content: template("resources.xml", ".online *", "resources.tss"); content-mode: replace; }
-// Local
-head #resources:data[config.environment.getIsOnline()=false]
-    { content: template("resources.xml", ".local *", "resources.tss"); content-mode: replace; }
+head #resources { content: template("resources.xml", "", "resources.tss"); content-mode: replace; }
 
 // Allow includes
 include {

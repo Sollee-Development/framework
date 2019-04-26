@@ -43,10 +43,7 @@
     "HTTP2Push\\CacheAware" : {
         "constructParams" : [
             "./",
-            {
-                "resources/css.min.css" : "stylesheet",
-                "resources/js.min.js" : "script"
-            }
+            {"Dice::INSTANCE" : ["HTTP2Push\\JsonToLinks", "convert"], "params" : ["Layouts/online-files.json"]}
         ]
     },
     "$404error" : {

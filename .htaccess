@@ -23,8 +23,8 @@ RewriteRule ^(.*)$ - [L,R=404]
     Header set Cache-Control "max-age=2678400, public"
 </filesMatch>
 
-# 1 week for css and js
-<filesMatch "(js.min.js|css.min.css)$">
-    Header set Cache-Control "max-age=86407, public, no-cache"
+# Immutable cause hash changes file name
+<filesMatch "(css|js)\.min\.[a-zA-z0-9]{6}\.(css|js)">
+    Header set Cache-Control "max-age=31536000, immutable"
     Header set Content-Encoding gzip
 </filesMatch>

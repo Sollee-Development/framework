@@ -3,3 +3,8 @@ script:data[config.environment.getIsOnline()=false]:attr(src)
 { repeat: data(config.resources.getResource("js")); content: iteration(); }
 link[rel="stylesheet"]:data[config.environment.getIsOnline()=false]:attr(href)
 { repeat: data(config.resources.getResource("css")); content: iteration(); }
+
+script:data[config.environment.getIsOnline()=true]:attr(src)
+{ repeat: json('online-files.json').js; content: iteration(); }
+link[rel="stylesheet"]:data[config.environment.getIsOnline()=true]:attr(href)
+{ repeat: json('online-files.json').css; content: iteration(); }
