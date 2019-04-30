@@ -1,0 +1,27 @@
+
+.c-custom-select {
+    position: relative;
+}
+
+.c-custom-select::after {
+    content: '\f078';
+    font-family: "Font Awesome 5 Free";
+    font-size: 20px;
+    right: 1rem;
+    line-height: $form-input-height;
+    position: absolute;
+    pointer-events: none;
+    font-weight: 700;
+}
+
+.c-custom-select__select::-ms-expand {
+    display: none;
+}
+
+.c-custom-select__select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    width: 100%;
+}

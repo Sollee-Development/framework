@@ -1,0 +1,12 @@
+
+.c-body-text {
+    color: $grey-5;
+    max-width: 25em;
+    line-height: 1.75;
+}
+.c-body-text--center {
+    margin: {
+        right: auto;
+        left: auto;
+    }
+}

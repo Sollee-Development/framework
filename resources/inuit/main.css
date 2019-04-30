@@ -2202,6 +2202,43 @@ header {
   margin-bottom: 12px;
 }
 
+.c-custom-select {
+  position: relative;
+}
+
+.c-custom-select::after {
+  content: "";
+  font-family: "Font Awesome 5 Free";
+  font-size: 20px;
+  right: 1rem;
+  line-height: 48px;
+  position: absolute;
+  pointer-events: none;
+  font-weight: 700;
+}
+
+.c-custom-select__select::-ms-expand {
+  display: none;
+}
+
+.c-custom-select__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+.c-body-text {
+  color: #54535a;
+  max-width: 25em;
+  line-height: 1.75;
+}
+
+.c-body-text--center {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* ==========================================================================
    #CLEARFIX
    ========================================================================== */
