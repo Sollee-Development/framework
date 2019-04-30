@@ -1,9 +1,17 @@
 input.error {
-  border: 1px dotted red;
+    border: 1px dotted red;
 }
 
 label.error {
-  color: red;
-  font-style: italic;
-  margin-left: 10px;
+    color: red;
+    font-style: italic;
+    margin-left: 10px;
+}
+
+select {
+    height: $form-input-height;
+}
+
+textarea {
+    height: 2.5 * $form-input-height;
 }
