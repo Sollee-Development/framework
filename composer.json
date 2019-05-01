@@ -17,7 +17,7 @@
         "solleer/router-regexmodulejson" : "dev-master",
         "level-2/transphporm" : "^1.2.0",
         "level-2/maphper" : "^0.9",
-        "level-2/dice" : "dev-master#4667ce9 as 4.0",
+        "level-2/dice" : "dev-master#e631f11 as 4.0",
         "level-2/simplecache" : "dev-master",
         "level-2/axel" : "dev-master",
         "level-2/config-router-modulejson" : "dev-patch-8",
