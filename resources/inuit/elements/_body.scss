@@ -1,6 +1,6 @@
 
 
-body {
+body,[canvas=container] {
     background-color: $bgcolor;
     color: $text-color;
 }

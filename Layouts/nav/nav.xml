@@ -1,6 +1,8 @@
-<ul class="o-list-inline">
+<ul class="o-list-inline u-margin-bottom-none">
     <li class="o-list-inline__item c-site-nav__item">
-        <a href="" class="o-list-inline__item c-site-nav__link"></a>
-        <i class="fa fa-caret-down fa-lg c-dropdown__btn"></i>
+        <span class="c-dropdown__text">
+            <a href="" class="o-list-inline__item c-site-nav__link"></a>
+            <i class="fa fa-caret-down fa-lg c-dropdown__btn"></i>
+        </span>
     </li>
 </ul>

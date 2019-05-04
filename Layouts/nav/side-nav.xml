@@ -1,0 +1,8 @@
+<ul class="o-list-bare u-margin-bottom-none">
+    <li class="c-site-nav__item">
+        <span class="c-dropdown__text">
+            <a href="" class="c-site-nav__link"></a>
+            <i class="fa fa-caret-down fa-2x c-dropdown__btn"></i>
+        </span>
+    </li>
+</ul>

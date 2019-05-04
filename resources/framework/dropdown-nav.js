@@ -5,8 +5,8 @@ toggle between hiding and showing the dropdown content */
 $(function () {
     $('.c-site-nav').on('click', '.c-dropdown__btn', function (event) {
         event.preventDefault();
-        $(this).nextAll(".c-dropdown__cont").toggleClass('c-dropdown__cont--hide');
-        $(this).nextAll(".mean-expand").click();
+        $(this).parent().nextAll(".c-dropdown__cont").toggleClass('c-dropdown__cont--hide');
+        $(this).parent().nextAll(".mean-expand").click();
     });
 });
 
