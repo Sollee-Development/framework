@@ -4,3 +4,7 @@ body,[canvas=container] {
     background-color: $bgcolor;
     color: $text-color;
 }
+
+main {
+    padding-top: $inuit-global-spacing-unit;
+}

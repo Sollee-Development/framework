@@ -1983,6 +1983,10 @@ body, [canvas=container] {
   color: black;
 }
 
+main {
+  padding-top: 24px;
+}
+
 input.error {
   border: 1px dotted red;
 }
@@ -2290,9 +2294,24 @@ header {
   line-height: 1.75;
 }
 
+.c-body-text--wide {
+  max-width: 35em;
+}
+
 .c-body-text--center {
   margin-right: auto;
   margin-left: auto;
+}
+
+.c-data {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.c-data__label {
+  font-weight: 400;
+  font-size: 16px;
+  color: #54535a;
 }
 
 /* ==========================================================================
