@@ -2001,6 +2001,12 @@ textarea {
   height: 120px;
 }
 
+input,
+textarea,
+select {
+  margin-bottom: 24px;
+}
+
 header {
   background-color: #f7f7f7;
   color: inherit;
@@ -2064,11 +2070,11 @@ header {
 }
 
 .c-messages {
-  margin-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 .c-messages__message {
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 0.8rem;
   border-width: 0.5rem;
   border-style: solid;

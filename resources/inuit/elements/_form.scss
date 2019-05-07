@@ -15,3 +15,9 @@ select {
 textarea {
     height: 2.5 * $form-input-height;
 }
+
+input,
+textarea,
+select {
+    margin-bottom: $inuit-global-spacing-unit;
+}

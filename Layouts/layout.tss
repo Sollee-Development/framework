@@ -14,7 +14,7 @@ base:attr(href) { content: data(config.environment.getRoot()); }
 // Messages
 /* Have messages container not show up if there are no messages */
 .c-messages { bind: messages(); }
-.c-messages:[data()=false]:attr(class) { content: attr(class), ' .u-hidden'; }
+.c-messages:[data()=false]:attr(class) { content: attr(class), ' u-hidden'; }
 // Add messages */
 .c-messages__message { repeat: data(); }
 .c-messages__message:attr(class) { content: attr(class), " c-messages__message c-messages__message--" + iteration(type); }
