@@ -2264,6 +2264,7 @@ header {
 
 .c-custom-select {
   position: relative;
+  display: inline-block;
 }
 
 .c-custom-select::after {
