@@ -10,7 +10,8 @@ class RouteOutput {
     private $error = null;
 
     public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
-                                \Utils\Request $request, $defaultModule = "index") {
+                                \Utils\Request $request,
+                                $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
@@ -18,7 +19,7 @@ class RouteOutput {
         $this->defaultModule = $defaultModule;
     }
 
-    public function find(array $url = []) {
+    public function find(array $url = []): void {
         $route = $this->getRoute($url);
 
         if (empty($route->getView())) return;
@@ -29,7 +30,21 @@ class RouteOutput {
             'params' => $this->request->get('url')
         ]);
 
-        return $route->getView()->output($this->viewData);
+        $output = $route->getView()->output($this->viewData);
+
+        if (!$output) return;
+
+        if ($route->getView() instanceof \Transphporm\Builder) $this->outputTransphporm($output);
+    }
+
+    public function outputTransphporm($output): void {
+        // If there are headers, Send them
+        if (!empty($output->headers)) {
+            $this->sendHeaders($output->headers);
+            exit;
+        }
+
+        echo $output->body;
     }
 
     public function sendHeaders(array $headers) {
