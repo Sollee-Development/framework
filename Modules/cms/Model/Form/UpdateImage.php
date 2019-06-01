@@ -18,7 +18,7 @@ class UpdateImage implements GenericForm, Loadable {
 
     public function submit(array $data) {
         $fileName = $this->saver->load($data['site_location'])->getData()['file_name'] ?? null;
-//var_dump($data); var_dump($fileName); exit;
+
         $submittedSaver = $this->saver->submit($data);
         if ($fileName !== null) $this->filesystem->delete($fileName);
 
