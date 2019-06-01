@@ -1,9 +1,9 @@
 {
     "PDO" : {
         "constructParams" : [
-            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["dsn"]},
-            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["username"]},
-            {"Dice::INSTANCE" : ["Config\\DataBase", "getDBInfo"], "params" : ["password"]}
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\DataBase", "getDBInfo"], "params" : ["dsn"]},
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\DataBase", "getDBInfo"], "params" : ["username"]},
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\DataBase", "getDBInfo"], "params" : ["password"]}
         ]
     },
     "MaphperLoader\\Json" : {
@@ -13,7 +13,7 @@
     },
     "MaphperLoader\\DataSource\\Database" : {
         "constructParams" : [
-            {"Dice::INSTANCE" : ["Config\\Environment", "getDebug"]}
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\Environment", "getDebug"]}
         ]
     },
     "SimpleCache\\SimpleCache" : {
@@ -22,7 +22,7 @@
     "Transphporm\\Builder" : {
         "call" : [
             ["loadModule", [{"Dice::INSTANCE" : "TransphpormMessages\\Module"}]],
-            ["loadModule", [{"Dice::INSTANCE" : "Config\\Transphporm\\FrameworkModule"}]]
+            ["loadModule", [{"Dice::INSTANCE" : "Solleer\\Framework\\Transphporm\\FrameworkModule"}]]
         ]
     },
     "$not_auth_view" : {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Config;
+namespace Solleer\Framework;
 
 class ConfigFiles {
     private $modules;

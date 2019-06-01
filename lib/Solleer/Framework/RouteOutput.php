@@ -1,5 +1,5 @@
 <?php
-namespace Config;
+namespace Solleer\Framework;
 class RouteOutput {
     private $router;
     private $dice;
@@ -10,7 +10,7 @@ class RouteOutput {
     private $error = null;
 
     public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
-                                \Utils\Request $request,
+                                \Level2\Core\Request $request,
                                 $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;

@@ -65,9 +65,9 @@
         "instanceOf" : "FileUpload\\FileUpload",
         "constructParams" : [
             {
-                "Dice::INSTANCE": ["Utils\\Request", "files"], "params" : ["photo_file"]},
+                "Dice::INSTANCE": ["Solleer\\Framework\\Request", "files"], "params" : ["photo_file"]},
             {
-                "Dice::INSTANCE": ["Utils\\Request", "server"]},
+                "Dice::INSTANCE": ["Solleer\\Framework\\Request", "server"]},
             {
                 "Dice::INSTANCE": "FileUpload\\FileNameGenerator\\Simple"}
         ],

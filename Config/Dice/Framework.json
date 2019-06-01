@@ -1,18 +1,18 @@
 {
-    "Config\\Environment" : {
+    "Solleer\\Framework\\Environment" : {
         "constructParams" : [
             "github/framework"
         ],
         "shared" : true
     },
-    "Config\\Modules" : {
+    "Solleer\\Framework\\Modules" : {
         "constructParams" : [
             [
                 "cms"
             ]
         ]
     },
-    "Config\\Resources" : {
+    "Solleer\\Framework\\Resources" : {
         "constructParams" : [
             {
                 "js" : ["node_modules/jquery/dist/jquery.js", "node_modules/jquery-validation/dist/jquery.validate.js",
@@ -23,21 +23,21 @@
         ]
     },
     "$js_minify" : {
-        "instanceOf" : "Config\\Minify",
+        "instanceOf" : "Solleer\\Framework\\Minify",
         "substitutions" : {
             "MatthiasMullie\\Minify\\Minify" : "MatthiasMullie\\Minify\\JS"
         },
         "constructParams" : [
-            {"Dice::INSTANCE" : ["Config\\Resources", "getResource"], "params" : ["js"]}
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\Resources", "getResource"], "params" : ["js"]}
         ]
     },
     "$css_minify" : {
-        "instanceOf" : "Config\\Minify",
+        "instanceOf" : "Solleer\\Framework\\Minify",
         "substitutions" : {
             "MatthiasMullie\\Minify\\Minify" : "MatthiasMullie\\Minify\\CSS"
         },
         "constructParams" : [
-            {"Dice::INSTANCE" : ["Config\\Resources", "getResource"], "params" : ["css"]}
+            {"Dice::INSTANCE" : ["Solleer\\Framework\\Resources", "getResource"], "params" : ["css"]}
         ]
     },
     "HTTP2Push\\CacheAware" : {
@@ -50,7 +50,7 @@
         "instanceOf" : "Transphporm\\Builder",
         "constructParams" : ["Layouts/layout.xml", "html:header[status] { content: 404;}"]
     },
-    "Config\\RouteOutput" : {
+    "Solleer\\Framework\\RouteOutput" : {
         "substitutions" : {
             "Level2\\Router\\Route" : {
                 "Dice::INSTANCE" : "Level2\\Router\\Route",
@@ -60,22 +60,22 @@
         "call" : [
             ["addViewData", [{
                 "config" : {
-                    "environment" : {"Dice::INSTANCE" : "Config\\Environment"},
-                    "resources" : {"Dice::INSTANCE" : "Config\\Resources"}
+                    "environment" : {"Dice::INSTANCE" : "Solleer\\Framework\\Environment"},
+                    "resources" : {"Dice::INSTANCE" : "Solleer\\Framework\\Resources"}
                 },
-                "request" : {"Dice::INSTANCE" : "Utils\\Request"}
+                "request" : {"Dice::INSTANCE" : "Level2\\Core\\Request"}
             }]]
         ]
     },
     "$config_dice": {
-        "instanceOf" : "Config\\ConfigFiles",
+        "instanceOf" : "Solleer\\Framework\\ConfigFiles",
         "constructParams" : [
             "dice",
             ["Config/Dice/Framework.json", "Config/Dice/Config.json"]
         ]
     },
     "$config_maphper": {
-        "instanceOf" : "Config\\ConfigFiles",
+        "instanceOf" : "Solleer\\Framework\\ConfigFiles",
         "constructParams" : [
             "maphper"
         ]
@@ -83,7 +83,7 @@
     "*" : {
         "substitutions" : {
             "Dice\\Dice" : {
-                "Dice::INSTANCE" : ["Config\\Dice\\MultJsonFileLoader", "load"],
+                "Dice::INSTANCE" : ["Solleer\\Framework\\Dice\\MultJsonFileLoader", "load"],
                 "params" : [
                     {"Dice::INSTANCE": ["$config_dice", "getFiles"]}
                 ]
@@ -92,9 +92,9 @@
     },
     "Level2\\Router\\Router" : {
         "call" : [
-            ["addRule", [{"Dice::INSTANCE" : "Config\\Router\\StaticPages"}]],
+            ["addRule", [{"Dice::INSTANCE" : "Solleer\\Framework\\Router\\StaticPages"}]],
             ["addRule", [{"Dice::INSTANCE" : "Solleer\\Router\\RegexModuleJson"}]],
-            ["addRule", [{"Dice::INSTANCE" : "Config\\Router\\ModulePhp"}]]
+            ["addRule", [{"Dice::INSTANCE" : "Solleer\\Framework\\Router\\ModulePhp"}]]
         ]
     }
 }

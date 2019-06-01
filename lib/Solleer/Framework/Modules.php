@@ -1,5 +1,5 @@
 <?php
-namespace Config;
+namespace Solleer\Framework;
 class Modules {
     private $environment;
 
@@ -18,14 +18,12 @@ class Modules {
     }
 
     private function getFile($file) {
-        $fileName = __DIR__ . '/../' . $file;
-        if (!file_exists($fileName)) return false;
+        if (!file_exists($file)) return false;
 
-        $settings = json_decode(str_replace('{dir}', dirname($file), file_get_contents($fileName)), true);
+        $settings = json_decode(str_replace('{dir}', dirname($file), file_get_contents($file)), true);
         if (isset($settings['extend'])) {
             $settings = array_merge($this->getFile($settings['extend']), $settings);
         }
         return $settings;
-
     }
 }

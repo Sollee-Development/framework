@@ -1,5 +1,5 @@
 <?php
-namespace Config\Transphporm;
+namespace Solleer\Framework\Transphporm;
 class Readable {
     private function camelCase($val) {
         $words = preg_split('/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/', $val);

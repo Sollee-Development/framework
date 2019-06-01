@@ -1,5 +1,5 @@
 <?php
-namespace Config\Router;
+namespace Solleer\Framework\Router;
 class StaticPages implements \Level2\Router\Rule {
     private $dice;
     private $static_dir;

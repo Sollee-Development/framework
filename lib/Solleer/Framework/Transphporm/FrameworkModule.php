@@ -1,5 +1,5 @@
 <?php
-namespace Config\Transphporm;
+namespace Solleer\Framework\Transphporm;
 class FrameworkModule implements \Transphporm\Module {
     public function load(\Transphporm\Config $config) {
         $functionSet = $config->getFunctionSet();

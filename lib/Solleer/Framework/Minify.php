@@ -1,6 +1,6 @@
 <?php
 
-namespace Config;
+namespace Solleer\Framework;
 
 use MatthiasMullie\Minify as Minifier;
 

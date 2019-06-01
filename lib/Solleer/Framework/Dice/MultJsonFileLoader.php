@@ -1,5 +1,5 @@
 <?php
-namespace Config\Dice;
+namespace Solleer\Framework\Dice;
 class MultJsonFileLoader {
     public function load($json, \Dice\Dice $dice = null) {
         if ($dice === null) $dice = new \Dice\Dice();

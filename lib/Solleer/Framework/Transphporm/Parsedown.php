@@ -1,5 +1,5 @@
 <?php
-namespace Config\Transphporm;
+namespace Solleer\Framework\Transphporm;
 class Parsedown implements \Transphporm\TSSFunction {
     private $parsedown;
 

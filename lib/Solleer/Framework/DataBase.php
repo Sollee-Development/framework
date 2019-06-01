@@ -1,11 +1,11 @@
 <?php
-namespace Config;
+namespace Solleer\Framework;
 class Database {
     private $environment;
     private $settings;
     private $defaultDSN;
 
-    public function __construct(Environment $environment, DatabaseSettings $settings) {
+    public function __construct(Environment $environment, \Config\DatabaseSettings $settings) {
         $this->environment = $environment;
         $this->settings = $settings;
         $this->defaultDSN = "mysql:host=localhost;dbname=";

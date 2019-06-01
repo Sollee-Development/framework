@@ -1,5 +1,5 @@
 <?php
-namespace Config\Transphporm;
+namespace Solleer\Framework\Transphporm;
 class LinkRewriter implements \Transphporm\TSSFunction {
     public function run(array $args, \DomElement $element) {
         $link = $args[0];

@@ -1,5 +1,5 @@
 <?php
-namespace Config;
+namespace Solleer\Framework;
 class Resources {
     private $environment;
     private $modules;
