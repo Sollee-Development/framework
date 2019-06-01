@@ -5,7 +5,7 @@ class Environment {
     private $isRemoteServer;
     private $debug;
 
-    public function __construct(\Utils\Request $request, $localRootPath) {
+    public function __construct(\Level2\Core\Request $request, $localRootPath) {
         $this->localRootPath = $localRootPath;
         // If the document root is not windows then it must be remote
         $this->isRemoteServer = strpos($request->server('DOCUMENT_ROOT'), 'C:') !== 0;
