@@ -95,8 +95,9 @@ $nav-breakpoint: tablet !default;
         border: 0;
     }
 }
-    .c-dropdown__item:first-child {
+    .c-dropdown__item {
         padding-top: $inuit-global-spacing-unit-small;
+        padding-bottom: $inuit-global-spacing-unit-small;
     }
 
 .c-dropdown__btn.c-dropdown__btn {

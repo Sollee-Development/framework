@@ -2200,8 +2200,9 @@ header {
   border: 0;
 }
 
-.c-dropdown__item:first-child {
+.c-dropdown__item {
   padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .c-dropdown__btn.c-dropdown__btn {
