@@ -1,11 +1,14 @@
+$data-color: inherit !default;
+$data-label-color: $grey-5 !default;
 
 .c-data {
     font-weight: 700;
     font-size: 20px;
+    color: $data-color;
 }
 
 .c-data__label {
     font-weight: 400;
     font-size: 16px;
-    color: $grey-5;
+    color: $data-label-color;
 }

@@ -2256,6 +2256,10 @@ header {
   padding: 12px;
 }
 
+.c-btn--disabled, .c-btn--disabled:hover {
+  background: #999999;
+}
+
 [data-cms] li {
   margin-bottom: 6px;
 }
@@ -2308,6 +2312,7 @@ header {
 .c-data {
   font-weight: 700;
   font-size: 20px;
+  color: inherit;
 }
 
 .c-data__label {
