@@ -1978,6 +1978,37 @@ table {
   direction: ltr;
 }
 
+.o-op-sides {
+  display: flex;
+  flex-direction: column;
+}
+
+.o-op-sides__l-side {
+  margin-bottom: 12px;
+}
+
+.o-op-sides__r-side {
+  text-align: left;
+}
+
+.o-op-sides__content--top-align {
+  vertical-align: top;
+}
+
+@media (min-width: 34.375em) {
+  .o-op-sides {
+    flex-direction: row;
+  }
+
+  .o-op-sides__l-side {
+    margin-bottom: 0;
+  }
+
+  .o-op-sides__r-side {
+    margin-left: auto;
+    text-align: right;
+  }
+}
 body, [canvas=container] {
   background-color: #f7f7f7;
   color: black;
@@ -2011,7 +2042,7 @@ select {
   margin-bottom: 24px;
 }
 
-header {
+.c-header {
   background-color: #f7f7f7;
   color: inherit;
   border-bottom: 0;
@@ -2230,7 +2261,13 @@ header {
 }
 
 .c-title--space-around {
-  padding: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.c-title--more-space-around {
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .c-title--center {
@@ -2319,6 +2356,21 @@ header {
   font-weight: 400;
   font-size: 16px;
   color: #54535a;
+}
+
+.c-sep-line {
+  background-color: #0f4b80;
+  width: 75px;
+  height: 3px;
+  margin-bottom: 12px;
+  margin-top: 0;
+  display: block;
+  text-align: left;
+}
+
+.c-sep-line--center {
+  margin-right: auto;
+  margin-left: auto;
 }
 
 /* ==========================================================================

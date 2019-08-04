@@ -1,0 +1,31 @@
+$o-op-sides-adjust-point: phablet !default;
+
+.o-op-sides {
+    display: flex;
+    flex-direction: column;
+}
+
+.o-op-sides__l-side {
+    margin-bottom: $inuit-global-spacing-unit-small;
+}
+
+.o-op-sides__r-side {
+    text-align: left;
+}
+
+.o-op-sides__content--top-align {
+    vertical-align: top;
+}
+
+@include mq($from: $o-op-sides-adjust-point) {
+    .o-op-sides {
+        flex-direction: row;
+    }
+    .o-op-sides__l-side {
+        margin-bottom: 0;
+    }
+    .o-op-sides__r-side {
+        margin-left: auto;
+        text-align: right;
+    }
+}

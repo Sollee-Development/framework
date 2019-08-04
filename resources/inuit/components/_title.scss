@@ -10,7 +10,16 @@ $title-color: #000 !default;
 }
 
 .c-title--space-around {
-    padding: $inuit-global-spacing-unit-tiny;
+    padding: {
+        top: $inuit-global-spacing-unit-tiny;
+        bottom: $inuit-global-spacing-unit-tiny;
+    }
+}
+.c-title--more-space-around {
+    padding: {
+        top: $inuit-global-spacing-unit-small;
+        bottom: $inuit-global-spacing-unit-small;
+    }
 }
 
     .c-title--center {

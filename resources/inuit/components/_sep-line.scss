@@ -1,0 +1,20 @@
+$sep-line-color: $primary-3 !default;
+
+.c-sep-line {
+    background-color: $sep-line-color;
+    width: 75px;
+    height: 3px;
+    margin: {
+        bottom: $inuit-global-spacing-unit-small;
+        top: 0;
+    }
+    display: block;
+    text-align: left;
+}
+
+.c-sep-line--center {
+    margin: {
+        right: auto;
+        left: auto;
+    }
+}
