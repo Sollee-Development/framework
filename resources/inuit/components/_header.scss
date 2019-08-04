@@ -1,7 +1,8 @@
 $header-color: white !default;
 $header-text-color: inherit !default;
+$seperation-border: 0 !default;
 
-header {
+.c-header {
     background-color: $header-color;
     color:  $header-text-color;
     border-bottom: $seperation-border;
