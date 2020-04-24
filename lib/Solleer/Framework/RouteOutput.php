@@ -2,20 +2,23 @@
 namespace Solleer\Framework;
 class RouteOutput {
     private $router;
-    private $dice;
+    private $environment;
     private $request;
     private $viewData = [];
     private $errorRoute;
+    private $logger;
     private $defaultModule;
     private $error = null;
 
     public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
                                 \Level2\Core\Request $request,
+                                \Psr\Log\LoggerInterface $logger,
                                 $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
         $this->request = $request;
+        $this->logger = $logger;
         $this->defaultModule = $defaultModule;
     }
 
@@ -68,6 +71,9 @@ class RouteOutput {
             }
 
             if ($this->environment->getDebug()) var_dump($this->error);
+            else if ($e->getMessage() === 'No matching route found')
+                $this->logger->notice('No matching route found', ['url' => $url]);
+            else error_log($this->error);
             // If there is no route
             $route = $this->errorRoute;
         }

@@ -50,12 +50,26 @@
         "instanceOf" : "Transphporm\\Builder",
         "constructParams" : ["Layouts/layout.xml", "html:header[status] { content: 404;}"]
     },
+    "$route_error_logger" : {
+        "instanceOf" : "Monolog\\Logger",
+        "constructParams": ["route_error", [
+            { "Dice::INSTANCE" : "$route_error_log_file_handler" }
+        ], [], null]
+    },
+    "$route_error_log_file_handler" : {
+        "instanceOf" : "Monolog\\Handler\\StreamHandler",
+        "constructParams" : [
+            "logs/route_error.log",
+            {"Dice::CONSTANT" : "Monolog\\Logger::DEBUG" }
+        ]
+    },
     "Solleer\\Framework\\RouteOutput" : {
         "substitutions" : {
             "Level2\\Router\\Route" : {
                 "Dice::INSTANCE" : "Level2\\Router\\Route",
                 "params" : [null, {"Dice::INSTANCE" : "$404error"}, null, null]
-            }
+            },
+            "Psr\\Log\\LoggerInterface" : "$route_error_logger"
         },
         "call" : [
             ["addViewData", [{
