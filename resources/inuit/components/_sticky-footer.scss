@@ -21,7 +21,7 @@ $sticky-footer-breakpoint: tablet !default;
             padding-bottom: $inuit-global-spacing-unit * 4 + $inuit-global-spacing-unit-small;
 
             @include mq($from: $sticky-footer-breakpoint) {
-                padding-bottom: $inuit-global-spacing-unit * 3;
+                padding-bottom: $inuit-global-spacing-unit * 3 + $inuit-global-spacing-unit-small;
             }
         }
 
