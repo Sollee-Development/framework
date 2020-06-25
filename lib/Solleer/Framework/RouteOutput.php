@@ -4,6 +4,7 @@ class RouteOutput {
     private $router;
     private $environment;
     private $request;
+    private $http2pusher;
     private $viewData = [];
     private $errorRoute;
     private $logger;
@@ -12,12 +13,14 @@ class RouteOutput {
 
     public function __construct(\Level2\Router\Router $router, Environment $environment, \Level2\Router\Route $errorRoute,
                                 \Level2\Core\Request $request,
+                                \HTTP2Push\CookieTrack $http2pusher,
                                 \Psr\Log\LoggerInterface $logger,
                                 $defaultModule = "index") {
         $this->router = $router;
         $this->environment = $environment;
         $this->errorRoute = $errorRoute;
         $this->request = $request;
+        $this->http2pusher = $http2pusher;
         $this->logger = $logger;
         $this->defaultModule = $defaultModule;
     }
@@ -41,6 +44,9 @@ class RouteOutput {
     }
 
     public function outputTransphporm($output): void {
+        // Send push headers for css
+        $this->http2pusher->sendHeader();
+
         // If there are headers, Send them
         if (!empty($output->headers)) {
             $this->sendHeaders($output->headers);
