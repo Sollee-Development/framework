@@ -1,7 +1,8 @@
 <?php
 namespace Solleer\Framework;
 class Modules {
-    private $environment;
+    private $modules;
+    private $configFile;
 
     public function __construct($modules = [], $configFile = "config.json") {
         $this->modules = $modules;

@@ -20,7 +20,7 @@ class CookieTrack {
 
         if ($header !== '') {
             // If there are files to be pushed, set the cookie to log the download time
-            setcookie('http2push', time());
+            setcookie($this->cookieName, time());
             // Then send the header
             header($header);
         }
