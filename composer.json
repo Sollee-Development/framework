@@ -11,6 +11,7 @@
     ],
     "require" : {
         "matthiasmullie/minify": "dev-master",
+        "monolog/monolog": "^2.0@beta",
         "solleer/form" : "^1.0",
         "solleer/transphporm-messages" : "^1.0",
         "solleer/maphper-loader" : "^3.0",
@@ -23,7 +24,7 @@
         "level-2/config-router-modulejson" : "dev-patch-8",
         "erusev/parsedown": "dev-master",
         "respect/validation" : "^1.1.12",
-        "solleer/user" : "dev-master",
+        "solleer/user" : "^1.1",
         "league/oauth2-client" : "^2.4.1",
         "egulias/email-validator": "2.1.6",
         "microsoft/microsoft-graph": "^1.5.0",
