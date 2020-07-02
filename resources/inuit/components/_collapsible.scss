@@ -1,0 +1,30 @@
+$collapsible-push-size: $inuit-global-spacing-unit-large;
+$collapsible-not-collapsed-icon: "\f068";
+$collapsible-collapsed-icon: "\f067";
+
+.c-collapsible {
+    margin-left: $collapsible-push-size;
+}
+
+.c-collapsible__title {
+    position: relative;
+}
+
+.c-collapsible__icon {
+    position: absolute;
+    left: -$collapsible-push-size;
+
+    i:before {
+        content: $collapsible-not-collapsed-icon;
+    }
+}
+
+.c-collapsible__title--collapsed {
+    + .c-collapsible__body {
+        display: none;
+    }
+
+    .c-collapsible__icon i:before{
+        content: $collapsible-collapsed-icon;
+    }
+}

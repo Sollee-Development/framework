@@ -2373,6 +2373,29 @@ select {
   margin-left: auto;
 }
 
+.c-collapsible {
+  margin-left: 48px;
+}
+
+.c-collapsible__title {
+  position: relative;
+}
+
+.c-collapsible__icon {
+  position: absolute;
+  left: -48px;
+}
+.c-collapsible__icon i:before {
+  content: "";
+}
+
+.c-collapsible__title--collapsed + .c-collapsible__body {
+  display: none;
+}
+.c-collapsible__title--collapsed .c-collapsible__icon i:before {
+  content: "";
+}
+
 /* ==========================================================================
    #CLEARFIX
    ========================================================================== */
