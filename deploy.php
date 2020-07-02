@@ -35,17 +35,7 @@ set('configFile', '~/.ssh/config');
 
 // Hosts
 
-host('production')
-    ->stage('production')
-    ->multiplexing(false)
-    ->set('branch', 'master')
-    ->set('deploy_path', '/path/to/your/deploy/path');
-
-host('testing')
-    ->stage('testing')
-    ->multiplexing(false)
-    ->set('branch', 'develop')
-    ->set('deploy_path', '/path/to/your/deploy/path');
+inventory('Config/hosts.yml');
 
 
 task('deploy:make_tmp', function () {
