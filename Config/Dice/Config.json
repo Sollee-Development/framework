@@ -9,7 +9,8 @@
     "MaphperLoader\\Json" : {
         "constructParams" : [
             {"Dice::INSTANCE": ["$config_maphper", "getFiles"]}
-        ]
+        ],
+        "shared": "true"
     },
     "MaphperLoader\\DataSource\\Database" : {
         "constructParams" : [

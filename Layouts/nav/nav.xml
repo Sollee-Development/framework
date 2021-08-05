@@ -2,7 +2,7 @@
     <li class="o-list-inline__item c-site-nav__item">
         <span class="c-dropdown__text">
             <a href="" class="o-list-inline__item c-site-nav__link"></a>
-            <i class="fa fa-caret-down fa-lg c-dropdown__btn"></i>
+            <i class="fa fa-2x fa-caret-down fa-lg c-dropdown__btn"></i>
         </span>
     </li>
 </ul>
